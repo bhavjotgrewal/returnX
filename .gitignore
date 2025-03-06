@@ -1,0 +1,64 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.vscode/
+.idea/
+.env
+.env.local
+.env.*.local
+!.env.example  # Keep example env files
+
+# Node.js (Frontend - Next.js)
+frontend/node_modules/
+frontend/.next/
+frontend/.turbo/
+frontend/.cache/
+frontend/out/  # If you're exporting a static site
+frontend/.eslintcache
+frontend/.parcel-cache
+frontend/.swc/
+frontend/coverage/
+frontend/dist/
+
+# Python (Backend - FastAPI)
+api/__pycache__/
+api/.venv/
+api/venv/
+api/env/
+api/.mypy_cache/
+api/.pytest_cache/
+api/.coverage
+api/instance/
+api/.DS_Store
+api/*.pyc
+api/.ruff_cache/
+
+# Pipenv & Poetry
+api/Pipfile.lock
+api/poetry.lock
+
+# Virtual Environments
+api/.env/
+api/.venv/
+api/env/
+api/venv/
+
+# macOS/Linux
+*.swp
+*.swo
+*.swn
+
+# IDE Files
+*.iml
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.bak
+*.tmp
