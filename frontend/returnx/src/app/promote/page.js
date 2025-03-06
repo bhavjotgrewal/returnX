@@ -34,7 +34,7 @@ export default function PromotePage() {
   if (!data || !data.suggestedActions) return <div className="p-6">No data available</div>;
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <h1 className="text-2xl font-semibold text-indigo-500">Suggested Actions</h1>
       
       <div className="grid grid-cols-1 gap-6">

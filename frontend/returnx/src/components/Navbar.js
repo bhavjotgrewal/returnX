@@ -7,12 +7,19 @@ import { usePathname } from 'next/navigation';
 export function Navbar() {
   const pathname = usePathname();
   
+  // Only show navbar for dashboard routes
+  const showNavbar = pathname.includes('/dashboard') || 
+                    pathname.includes('/promote') || 
+                    pathname.includes('/settings');
+  
+  if (!showNavbar) return null;
+  
   const isActive = (path) => {
     return pathname === path;
   };
   
   return (
-    <div className="bg-white h-screen w-16 md:w-60 border-r border-gray-200 flex flex-col fixed left-0 top-0">
+    <div className="bg-white h-screen w-16 md:w-60 border-r border-gray-200 flex flex-col fixed left-0 top-0 z-50">
       <div className="p-4 flex items-center">
         <div className="flex items-center gap-2">
           <div className="relative w-6 h-6">
