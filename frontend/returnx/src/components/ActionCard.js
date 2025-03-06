@@ -1,9 +1,10 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
-import { PreviewChanges } from '@/components/PreviewChanges';
+import PreviewChanges from '@/components/PreviewChanges';
 
-export function ActionCard({ number, title, image, description }) {
+// Change to default export
+export default function ActionCard({ number, title, image, description }) {
   const [showPreview, setShowPreview] = useState(false);
   
   return (

@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-export function PreviewChanges({ onReject }) {
+// Change to default export
+export default function PreviewChanges({ onReject }) {
   return (
     <div className="p-6 flex flex-col items-center justify-center space-y-4 animate-fade-in min-h-[400px]">
       <h2 className="text-xl font-medium text-indigo-600">Preview Changes</h2>

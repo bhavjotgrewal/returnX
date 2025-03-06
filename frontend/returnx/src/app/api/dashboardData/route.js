@@ -1,7 +1,9 @@
+// Make sure this file is at /app/api/dashboardData/route.js
+
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  // Return the same mock data you had before
+  // Return mock data
   return NextResponse.json({
     stats: {
         availableBalance: {

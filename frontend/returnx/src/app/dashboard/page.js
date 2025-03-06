@@ -1,14 +1,39 @@
+'use client';
+
+import { useState, useEffect } from "react";
 import { ReturnStats } from "@/components/ReturnStats";
 import { ReturnsChart } from "@/components/ReturnsChart";
 import { TopReturnedProducts } from "@/components/TopReturnedProducts";
 import { GenerateActionsButton } from "@/components/GenerateActionsButton";
 
-export default async function DashboardPage() {
+export default function DashboardPage() {
   const [data, setData] = useState(null);
-
-  const res = await fetch("/api/dashboardData");
-  const result = await res.json();
-  setData(result);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("/api/dashboardData");
+        if (!res.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const result = await res.json();
+        setData(result);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, []);
+  
+  if (isLoading) return <div className="p-6">Loading...</div>;
+  if (error) return <div className="p-6 text-red-500">Error: {error}</div>;
+  if (!data) return <div className="p-6">No data available</div>;
   
   return (
     <div className="space-y-6">

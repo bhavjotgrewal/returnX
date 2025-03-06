@@ -1,7 +1,8 @@
-"use client";
+'use client';
 
-import { ActionCard } from "@/components/ActionCard";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+// Fix the import by importing directly - not using the named import syntax
+import ActionCard from "@/components/ActionCard";
 
 export default function PromotePage() {
   const [data, setData] = useState(null);
