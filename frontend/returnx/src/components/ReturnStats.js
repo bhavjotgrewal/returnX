@@ -11,10 +11,10 @@ export function ReturnStats({ stats }) {
     };
     
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+      <div className="bg-white rounded-lg shadow p-4">
         <div className="grid grid-cols-4 gap-4">
           <div className="flex flex-col">
-            <span className="text-sm text-gray-500 dark:text-gray-400">Available Balance</span>
+            <span className="text-sm text-gray-500">Available Balance</span>
             <span className="text-2xl font-bold">{formatValue(stats.availableBalance.value, 'currency')}</span>
             <div className={`flex items-center text-xs ${stats.availableBalance.isPositive ? 'text-green-500' : 'text-red-500'} mt-1`}>
               <span className="mr-1">{stats.availableBalance.isPositive ? '↑' : '↓'} {Math.abs(stats.availableBalance.change)}%</span>
@@ -24,7 +24,7 @@ export function ReturnStats({ stats }) {
           </div>
           
           <div className="flex flex-col">
-            <span className="text-sm text-gray-500 dark:text-gray-400">Today Revenue</span>
+            <span className="text-sm text-gray-500">Today Revenue</span>
             <span className="text-2xl font-bold">{formatValue(stats.todayRevenue.value, 'currency')}</span>
             <div className={`flex items-center text-xs ${stats.todayRevenue.isPositive ? 'text-green-500' : 'text-red-500'} mt-1`}>
               <span className="mr-1">{stats.todayRevenue.isPositive ? '↑' : '↓'} {Math.abs(stats.todayRevenue.change)}%</span>
@@ -34,7 +34,7 @@ export function ReturnStats({ stats }) {
           </div>
           
           <div className="flex flex-col">
-            <span className="text-sm text-gray-500 dark:text-gray-400">Daily Sessions</span>
+            <span className="text-sm text-gray-500">Daily Sessions</span>
             <span className="text-2xl font-bold">{formatValue(stats.dailySessions.value, 'number')}</span>
             <div className={`flex items-center text-xs ${stats.dailySessions.isPositive ? 'text-green-500' : 'text-red-500'} mt-1`}>
               <span className="mr-1">{stats.dailySessions.isPositive ? '↑' : '↓'} {Math.abs(stats.dailySessions.change)}%</span>
@@ -44,7 +44,7 @@ export function ReturnStats({ stats }) {
           </div>
           
           <div className="flex flex-col">
-            <span className="text-sm text-gray-500 dark:text-gray-400">Total Returns</span>
+            <span className="text-sm text-gray-500">Total Returns</span>
             <span className="text-2xl font-bold">{formatValue(stats.totalReturns.value, 'number')}</span>
             <div className={`flex items-center text-xs ${stats.totalReturns.isPositive ? 'text-green-500' : 'text-red-500'} mt-1`}>
               <span className="mr-1">{stats.totalReturns.isPositive ? '↑' : '↓'} {Math.abs(stats.totalReturns.change)}%</span>
