@@ -26,27 +26,27 @@ frontend/coverage/
 frontend/dist/
 
 # Python (Backend - FastAPI)
-api/__pycache__/
-api/.venv/
-api/venv/
-api/env/
-api/.mypy_cache/
-api/.pytest_cache/
-api/.coverage
-api/instance/
-api/.DS_Store
-api/*.pyc
-api/.ruff_cache/
+backend/__pycache__/
+backend/.venv/
+backend/venv/
+backend/env/
+backend/.mypy_cache/
+backend/.pytest_cache/
+backend/.coverage
+backend/instance/
+backend/.DS_Store
+backend/*.pyc
+backend/.ruff_cache/
 
 # Pipenv & Poetry
-api/Pipfile.lock
-api/poetry.lock
+backend/Pipfile.lock
+backend/poetry.lock
 
 # Virtual Environments
-api/.env/
-api/.venv/
-api/env/
-api/venv/
+backend/.env/
+backend/.venv/
+backend/env/
+backend/venv/
 
 # macOS/Linux
 *.swp
