@@ -7,17 +7,17 @@ settings_bp = Blueprint('settings', __name__)
 # Settings file path - use /tmp for Vercel
 SETTINGS_FILE = '/tmp/settings.json' if os.environ.get('VERCEL') else 'data/settings.json'
 
-# Default settings
+# Default settings with placeholder values
 DEFAULT_SETTINGS = {
-    "api_key": "",
-    "api_endpoint": "",
-    "webhook_url": "",
-    "email_notifications": False,
-    "notification_email": "",
-    "slack_notifications": False,
-    "data_retention_period": "90",
-    "anonymize_customer_data": False,
-    "data_refresh_interval": "15"
+    "api_key": "returnx_k2H8nP9qR5tV7zY3aL1mB4cX6vF8",
+    "api_endpoint": "https://api.returnx.ai/v1",
+    "webhook_url": "https://return-x-backend.vercel.app/api/webhooks/notifications",
+    "email_notifications": True,
+    "notification_email": "team@returnx-hackathon.com",
+    "slack_notifications": True,
+    "data_retention_period": "90",  # days
+    "anonymize_customer_data": True,
+    "data_refresh_interval": "15"  # minutes
 }
 
 def load_settings():
