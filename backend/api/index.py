@@ -1,11 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route('/')
 def home():
-    return jsonify({"message": "Hello from Flask on Vercel!"})
+    return 'Hello, World!'
 
-# Required for Vercel
-def handler(event, context):
-    return app(event, context)
+@app.route('/about')
+def about():
+    return 'About'
