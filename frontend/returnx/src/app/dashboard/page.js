@@ -36,7 +36,7 @@ export default function DashboardPage() {
   if (!data) return <div className="p-6">No data available</div>;
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <h1 className="text-2xl font-semibold text-indigo-500">Return Analytics</h1>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -50,7 +50,7 @@ export default function DashboardPage() {
       
       <ReturnStats stats={data.stats} />
       
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-end mt-8">
         <GenerateActionsButton />
       </div>
     </div>
