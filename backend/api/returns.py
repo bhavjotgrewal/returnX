@@ -34,8 +34,14 @@ def configure_gemini():
 
 # Make sure the data directory exists
 def ensure_data_dir():
-    os.makedirs(os.path.dirname(RETURNS_FILE), exist_ok=True)
-    os.makedirs('data/return_images', exist_ok=True)
+    """Ensure data directories exist"""
+    # Use /tmp in Vercel environment
+    base_dir = '/tmp/data' if os.environ.get('VERCEL') else 'data'
+    images_dir = f'{base_dir}/return_images'
+    
+    os.makedirs(base_dir, exist_ok=True)
+    os.makedirs(images_dir, exist_ok=True)
+    return base_dir, images_dir
 
 # Initialize returns data file if it doesn't exist
 def init_returns_data():
@@ -49,13 +55,12 @@ def init_returns_data():
 
 def save_return_image(image_data):
     try:
-        # Ensure directory exists
-        base_dir = '/tmp/return_images' if os.environ.get('VERCEL') else 'data/return_images'
-        os.makedirs(base_dir, exist_ok=True)
+        # Get the appropriate directory
+        _, images_dir = ensure_data_dir()
         
         # Generate unique filename
         filename = f"return_image_{uuid.uuid4()}.jpg"
-        file_path = f"{base_dir}/{filename}"
+        file_path = f"{images_dir}/{filename}"
         
         # Remove data URL prefix if present
         if ',' in image_data:

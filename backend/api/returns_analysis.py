@@ -350,7 +350,9 @@ def apply_action():
     new_description = data['improvedDescription']
     
     try:
-        products_file = 'data/product_descriptions.json'
+        # Use /tmp for file storage on Vercel
+        base_dir = '/tmp/data' if os.environ.get('VERCEL') else 'data'
+        products_file = f'{base_dir}/product_descriptions.json'
         
         with open(products_file, 'r') as f:
             products = json.load(f)

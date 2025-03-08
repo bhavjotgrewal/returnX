@@ -52,6 +52,7 @@ def create_app():
 # Create the application instance
 app = create_app()
 
+# For local development
 if __name__ == "__main__":
     # Check for Gemini API key
     if not os.environ.get('GEMINI_API_KEY'):
@@ -68,4 +69,4 @@ if __name__ == "__main__":
     print("  - http://127.0.0.1:5000/api/products")
     print("  - http://127.0.0.1:5000/api/returns_analysis/dashboardData")
     print("  - http://127.0.0.1:5000/api/returns_analysis/applyAction")
-    # app.run(debug=False)
+    app.run(debug=True)
