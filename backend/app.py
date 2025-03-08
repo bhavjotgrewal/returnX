@@ -68,4 +68,4 @@ if __name__ == "__main__":
     print("  - http://127.0.0.1:5000/api/products")
     print("  - http://127.0.0.1:5000/api/returns_analysis/dashboardData")
     print("  - http://127.0.0.1:5000/api/returns_analysis/applyAction")
-    app.run(debug=True)
+    # app.run(debug=False)
