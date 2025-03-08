@@ -10,18 +10,18 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="flex flex-col min-h-screen">
         <CartProvider>
           <Navbar />
-          <main className="pt-16">
+          <main className="pt-16 flex-grow">
             {children}
           </main>
-          <footer className="bg-gray-100 py-10 mt-16">
+          <footer className="bg-gray-100 py-10 mt-auto text-center">
             <div className="container mx-auto px-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
+                <div className="flex flex-col items-center">
                   <h3 className="text-lg font-bold mb-4">About CLOUD</h3>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 max-w-xs">
                     CLOUD is a fashion brand focused on comfort, design, and innovation.
                     We create sustainable clothing that makes you feel good while looking good.
                   </p>

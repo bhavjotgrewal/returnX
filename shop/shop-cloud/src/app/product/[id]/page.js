@@ -5,31 +5,51 @@ import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useCart } from '../../../context/CartContext';
 
-// Sample product data - would typically come from an API
+// Sample product data - ideally this would come from an API or database
 const productsData = [
   {
-    id: '1',
+    id: 1,
     name: 'Sigma',
     price: 100.99,
     currency: 'CAD',
-    image: '/placeholder.jpg',
+    image: '/images/products/sigma-1.jpg',
     category: 'hoodies',
-    colors: ['burgundy', 'black', 'cream'],
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'The Sigma hoodie features a unique abstract design, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.',
-    composition: '95% organic certified cotton, 5% elastane'
+    sizes: ['XS', 'S', 'M', 'L', 'XL'], // Added sizes
+    colors: ['Black', 'White', 'Gray'] // Added colors
   },
   {
-    id: '2',
+    id: 2,
+    name: 'Sigma',
+    price: 100.99,
+    currency: 'CAD',
+    image: '/images/products/sigma-1.jpg',
+    category: 'hoodies',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Black', 'White', 'Gray']
+  },
+  {
+    id: 3,
     name: 'Sasha Trousers',
     price: 100.99,
     currency: 'CAD',
-    image: '/placeholder.jpg',
+    image: '/images/products/sigma-1.jpg',
     category: 'trousers',
-    colors: ['burgundy', 'black', 'olive'],
+    description: 'The Sasha Trousers are our best-selling jogger-style trouser, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.',
+    composition: '95% organic certified cotton, 5% elastane',
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    description: 'The Sasha Trousers are our best-selling jogger-style trouser, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.\n\nThis style is a wardrobe essential and reliable daywear piece that you\'ll find yourself reaching for on a daily basis.',
-    composition: '95% organic certified cotton, 5% elastane'
+    colors: ['Black', 'Navy', 'Burgundy']
+  },
+  {
+    id: 4,
+    name: 'Sasha Trousers',
+    price: 100.99,
+    currency: 'CAD',
+    image: '/images/products/sigma-1.jpg',
+    category: 'trousers',
+    description: 'The Sasha Trousers are our best-selling jogger-style trouser, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.',
+    composition: '95% organic certified cotton, 5% elastane',
+    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    colors: ['Black', 'Navy', 'Burgundy']
   }
 ];
 
@@ -42,8 +62,8 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   
-  // Find the product by ID
-  const product = productsData.find(p => p.id === params.id);
+  // Find the product by ID - convert params.id to a number
+  const product = productsData.find(p => p.id === Number(params.id));
   
   if (!product) {
     return (
@@ -72,8 +92,6 @@ export default function ProductDetail() {
       quantity
     }, selectedSize);
     
-    // Show success message or modal
-    alert('Added to cart!');
     router.push('/cart');
   };
 
@@ -102,7 +120,7 @@ export default function ProductDetail() {
             transition={{ duration: 0.5 }}
           >
             <img
-              src="/api/placeholder/600/800"
+              src={product.image || "/images/products/sigma-1.jpg"}
               alt={product.name}
               className="w-full h-auto object-cover bg-gray-100"
             />
@@ -197,4 +215,4 @@ export default function ProductDetail() {
       </motion.div>
     </div>
   );
-}
+} 

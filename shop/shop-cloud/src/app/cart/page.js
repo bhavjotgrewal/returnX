@@ -1,14 +1,17 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useCart } from '../../context/CartContext';
 
 export default function Cart() {
-  const { cart, removeFromCart, checkout } = useCart();
+  const { cart, removeFromCart, updateCartItemQuantity, getCartTotal, checkout } = useCart();
+  const router = useRouter();
   
-  const calculateTotal = () => {
-    return cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+  const handleCheckout = () => {
+    checkout();
+    router.push('/thank-you');
   };
   
   const container = {
@@ -37,7 +40,7 @@ export default function Cart() {
           animate={{ opacity: 1 }}
         >
           <p className="text-xl mb-4">Your cart is empty</p>
-          <Link href="/">
+          <Link href="/products">
             <motion.button
               className="bg-black text-white px-8 py-3"
               whileHover={{ scale: 1.05 }}
@@ -56,12 +59,12 @@ export default function Cart() {
           <div className="mb-8">
             {cart.map(item => (
               <motion.div 
-                key={item.id}
+                key={item.cartItemId || item.id}
                 className="flex items-center border-b py-4"
                 variants={item}
               >
                 <img
-                  src="/api/placeholder/100/100"
+                  src={item.image}
                   alt={item.name}
                   className="w-24 h-24 object-cover bg-gray-100 mr-4"
                 />
@@ -72,14 +75,32 @@ export default function Cart() {
                   {item.selectedColor && (
                     <p className="text-gray-600">Color: {item.selectedColor}</p>
                   )}
-                  <p className="text-gray-600">Quantity: {item.quantity || 1}</p>
+                  
+                  <div className="flex items-center mt-2">
+                    <span className="mr-2">Quantity:</span>
+                    <button 
+                      className="w-8 h-8 border rounded-l flex items-center justify-center"
+                      onClick={() => updateCartItemQuantity(item.cartItemId || item.id, (item.quantity || 1) - 1)}
+                    >
+                      -
+                    </button>
+                    <span className="w-8 h-8 border-t border-b flex items-center justify-center">
+                      {item.quantity || 1}
+                    </span>
+                    <button 
+                      className="w-8 h-8 border rounded-r flex items-center justify-center"
+                      onClick={() => updateCartItemQuantity(item.cartItemId || item.id, (item.quantity || 1) + 1)}
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
                 
                 <div className="text-right">
-                  <p className="font-medium">${(item.price * (item.quantity || 1)).toFixed(2)} {item.currency}</p>
+                  <p className="font-medium">${((item.price * (item.quantity || 1)).toFixed(2))} {item.currency}</p>
                   <motion.button 
                     className="text-red-500 text-sm mt-2"
-                    onClick={() => removeFromCart(item.id)}
+                    onClick={() => removeFromCart(item.cartItemId || item.id)}
                     whileHover={{ scale: 1.05 }}
                   >
                     Remove
@@ -94,14 +115,14 @@ export default function Cart() {
             variants={item}
           >
             <h2 className="text-xl font-bold">Total</h2>
-            <p className="text-xl font-bold">${calculateTotal().toFixed(2)} CAD</p>
+            <p className="text-xl font-bold">${getCartTotal().toFixed(2)} CAD</p>
           </motion.div>
           
           <motion.div 
             className="flex justify-end space-x-4"
             variants={item}
           >
-            <Link href="/">
+            <Link href="/products">
               <motion.button
                 className="border border-black px-8 py-3"
                 whileHover={{ scale: 1.05 }}
@@ -115,7 +136,7 @@ export default function Cart() {
               className="bg-black text-white px-8 py-3"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={checkout}
+              onClick={handleCheckout}
             >
               Checkout
             </motion.button>

@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
   };
   
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link href={`/product/${product.id}`} passHref>
       <motion.div 
         className="cursor-pointer group"
         whileHover={{ scale: 1.03 }}
@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
       >
         <div className="relative mb-2">
           <img
-            src="/api/placeholder/400/500"
+            src={product.image || "/images/products/sigma-1.jpg"}
             alt={product.name}
             className="w-full h-96 object-cover bg-gray-100"
           />
@@ -42,4 +42,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default ProductCard; 

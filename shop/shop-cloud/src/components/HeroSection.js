@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const HeroSection = () => {
@@ -13,7 +14,7 @@ const HeroSection = () => {
     >
       <div className="absolute inset-0 bg-gray-800 bg-opacity-20">
         <img
-          src="/api/placeholder/1200/800"
+          src="/images/hero-background.jpg"
           alt="Hero background"
           className="w-full h-full object-cover"
         />
@@ -35,16 +36,18 @@ const HeroSection = () => {
         >
           COMFORT. DESIGN. INNOVATION.
         </motion.p>
-        <motion.button
-          className="bg-white text-black px-8 py-3"
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          SHOP NOW
-        </motion.button>
+        <Link href="/products">
+          <motion.button
+            className="bg-white text-black px-8 py-3"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            SHOP NOW
+          </motion.button>
+        </Link>
       </div>
     </motion.div>
   );
