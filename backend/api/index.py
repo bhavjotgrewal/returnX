@@ -1,11 +1,12 @@
-# This file is specifically for Vercel serverless deployment
-# It imports the Flask app from app.py and exposes it for Vercel
-
+# api/index.py
+from flask import Flask
 import sys
 import os
 
-# Add parent directory to path to allow imports
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add the parent directory to path so imports work correctly
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Import the app from the main app.py file
+# Import the app directly - Vercel needs this specific handler
 from app import app
+
+handler = app
