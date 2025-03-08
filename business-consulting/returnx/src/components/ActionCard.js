@@ -1,86 +1,70 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import PreviewChanges from '@/components/PreviewChanges';
+import Image from 'next/image';
 
-// Change to default export
-export default function ActionCard({ number, title, image, description }) {
-  const [showPreview, setShowPreview] = useState(false);
-  
+export default function ActionCard({ number, title, description, image }) {
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden relative">
-      <AnimatePresence mode="wait">
-        {showPreview ? (
-          <motion.div
-            key="preview"
-            initial={{ x: '100%', opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: '100%', opacity: 0 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          >
-            <PreviewChanges onReject={() => setShowPreview(false)} />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="card"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="bg-gray-100 w-6 h-6 rounded-full flex items-center justify-center text-gray-600">
-                  {number}
-                </div>
-                <h3 className="text-sm font-medium text-indigo-600">{title}</h3>
-              </div>
-              
-              <div className="mt-2">
-                <div className="rounded-lg overflow-hidden mb-3">
-                  <img src={image} alt={title} className="w-full object-cover" />
-                </div>
-                
-                <p className="text-gray-600 text-sm">{description}</p>
-                
-                <div className="mt-4 grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="bg-gray-100 p-2 rounded">
-                      <div className="flex justify-between">
-                        <span>-15.2%</span>
-                        <span className="text-green-500">↑</span>
-                      </div>
-                      <div className="text-gray-500 text-xs">return rate</div>
-                    </div>
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-wrap">
+        <div className="md:w-1/3 relative h-64 md:h-auto">
+          <Image 
+            src={image || "/api/placeholder/400/320"} 
+            alt={title} 
+            fill
+            style={{ objectFit: 'cover' }}
+            className="border-r border-gray-100"
+          />
+        </div>
+        
+        <div className="p-6 md:w-2/3 flex flex-col">
+          <div className="flex items-center mb-3">
+            <div className="bg-indigo-100 text-indigo-600 h-8 w-8 rounded-full flex items-center justify-center font-medium mr-3">
+              {number}
+            </div>
+            <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+          </div>
+          
+          <div className="flex-1">
+            <div className="bg-gray-50 p-4 rounded-lg">
+              <p className="text-gray-700">{description}</p>
+            </div>
+          
+            <div className="mt-6 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <div className="text-sm text-gray-500 mb-1">Current</div>
+                  <div className="bg-gray-100 rounded-lg p-3">
+                    <div className="text-lg font-semibold text-gray-700">48%</div>
+                    <div className="text-xs text-gray-500">of total returns</div>
                   </div>
-                  <div>
-                    <div className="bg-gray-100 p-2 rounded">
-                      <div className="flex justify-between">
-                        <span>+10.5%</span>
-                        <span className="text-red-500">↓</span>
-                      </div>
-                      <div className="text-gray-500 text-xs">yearly change</div>
+                </div>
+                
+                <div>
+                  <div className="text-sm text-gray-500 mb-1">Predicted</div>
+                  <div className="bg-gray-100 rounded-lg p-3">
+                    <div className="flex items-center">
+                      <div className="text-lg font-semibold text-red-500">-$2310</div>
+                      <svg className="h-4 w-4 text-red-500 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+                      </svg>
                     </div>
+                    <div className="text-xs text-gray-500">in profit</div>
                   </div>
                 </div>
               </div>
             </div>
-            
-            <div className="bg-gray-50 p-2 flex justify-end">
-              <button 
-                onClick={() => setShowPreview(true)}
-                className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-1 rounded-full text-xs transition-all duration-200 flex items-center gap-1"
-              >
-                <span>Edit Suggestion</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 6L15 12L9 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+          
+          <div className="mt-6 flex justify-end">
+            <button className="bg-indigo-100 text-indigo-600 px-4 py-2 rounded-md font-medium flex items-center hover:bg-indigo-200 transition-colors">
+              <svg className="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Use Suggestion
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

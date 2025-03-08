@@ -1,14 +1,14 @@
-'use client'; 
+'use client';
 
 import { motion } from 'framer-motion';
 
 // Variants for page transitions
 const variants = {
-  hidden: { opacity: 0, x: 0, y: 20 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: 0, y: 20 },
+    hidden: { opacity: 0, x: 0, y: 20 },
+    enter: { opacity: 1, x: 0, y: 0 },
+    exit: { opacity: 0, x: 0, y: 20 },
 };
-
+  
 export default function Template({ children }) {
   return (
     <motion.div
