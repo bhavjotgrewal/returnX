@@ -9,8 +9,8 @@ import uuid
 returns_analysis_bp = Blueprint('returns_analysis', __name__)
 
 # Files to store data
-RETURNS_FILE = 'data/returns.json'
-PRODUCTS_FILE = 'data/product_descriptions.json'
+RETURNS_FILE = '/tmp/returns.json' if os.environ.get('VERCEL') else 'data/returns.json'
+PRODUCTS_FILE = '/tmp/product_descriptions.json' if os.environ.get('VERCEL') else 'data/product_descriptions.json'
 
 # Gemini import - wrapped in try/except to avoid errors if not installed
 try:

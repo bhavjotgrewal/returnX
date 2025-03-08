@@ -6,7 +6,7 @@ import os
 products_bp = Blueprint('products', __name__)
 
 # File to store the descriptions
-PRODUCTS_FILE = 'data/product_descriptions.json'
+PRODUCTS_FILE = '/tmp/product_descriptions.json' if os.environ.get('VERCEL') else 'data/product_descriptions.json'
 
 # Initial product data matching provided dataset
 def get_initial_products():

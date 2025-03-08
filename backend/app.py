@@ -39,8 +39,13 @@ def create_app():
         return jsonify({"status": "ok"})
     
     # Create data directories if running locally
-    os.makedirs('data', exist_ok=True)
-    os.makedirs('data/return_images', exist_ok=True)
+    if not os.environ.get('VERCEL'):
+        os.makedirs('data', exist_ok=True)
+        os.makedirs('data/return_images', exist_ok=True)
+    else:
+        # In Vercel, we can use /tmp which is writable
+        os.makedirs('/tmp', exist_ok=True)
+        os.makedirs('/tmp/return_images', exist_ok=True)
     
     return app
 

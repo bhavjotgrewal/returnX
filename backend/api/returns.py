@@ -17,7 +17,7 @@ except ImportError:
     GEMINI_AVAILABLE = False
 
 # File to store the return reasons
-RETURNS_FILE = 'data/returns.json'
+RETURNS_FILE = '/tmp/returns.json' if os.environ.get('VERCEL') else 'data/returns.json'
 
 # Configure the Gemini API
 def configure_gemini():
@@ -47,15 +47,15 @@ def init_returns_data():
     with open(RETURNS_FILE, 'r') as f:
         return json.load(f)
 
-# Save image to disk
 def save_return_image(image_data):
     try:
         # Ensure directory exists
-        os.makedirs('data/return_images', exist_ok=True)
+        base_dir = '/tmp/return_images' if os.environ.get('VERCEL') else 'data/return_images'
+        os.makedirs(base_dir, exist_ok=True)
         
         # Generate unique filename
         filename = f"return_image_{uuid.uuid4()}.jpg"
-        file_path = f"data/return_images/{filename}"
+        file_path = f"{base_dir}/{filename}"
         
         # Remove data URL prefix if present
         if ',' in image_data:
