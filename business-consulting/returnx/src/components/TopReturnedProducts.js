@@ -2,13 +2,13 @@
 
 export function TopReturnedProducts({ products }) {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm h-full">
+    <div className="bg-white rounded-lg p-4 shadow-sm h-full google-card">
       <h2 className="text-lg font-medium text-gray-800 mb-4">Top Returned Products</h2>
       
       <div className="space-y-4">
         {products.map((product, index) => (
           <div key={index} className="flex items-start">
-            <div className="text-lg font-medium text-indigo-600 mr-3">
+            <div className="text-lg font-medium text-google-blue mr-3">
               {index + 1}.
             </div>
             <div className="flex-1">

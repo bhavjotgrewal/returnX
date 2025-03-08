@@ -184,7 +184,7 @@ export async function GET() {
   };
 
   // Simulate network delay to make the app feel more realistic
-  await new Promise(resolve => setTimeout(resolve, 500));
+  await new Promise(resolve => setTimeout(resolve, 100));
 
   return NextResponse.json(data);
 }

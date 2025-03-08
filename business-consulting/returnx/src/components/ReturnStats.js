@@ -12,7 +12,7 @@ export function ReturnStats({ stats }) {
 
 function StatCard({ title, value, subValue, change, isPositive, icon }) {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-sm">
+    <div className="bg-white p-6 rounded-lg shadow-sm google-card">
       <div className="flex justify-between items-start">
         <div>
           <p className="text-sm text-gray-500 font-medium">{title}</p>

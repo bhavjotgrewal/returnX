@@ -1,5 +1,6 @@
 export async function GET(request, { params }) {
-    const { width, height } = params;
+    const width = await params.width;
+    const height = await params.height;
     
     // SVG placeholder
     const svg = `

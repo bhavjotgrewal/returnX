@@ -133,7 +133,7 @@ export function ReturnsChart({ chartData: initialChartData }) {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-indigo-700 text-white px-3 py-2 rounded shadow-md">
+        <div className="bg-google-blue text-white px-3 py-2 rounded shadow-md">
           <p className="font-semibold">{payload[0].payload.date}</p>
           <p className="text-sm">{payload[0].value.toLocaleString()}</p>
         </div>
@@ -143,7 +143,7 @@ export function ReturnsChart({ chartData: initialChartData }) {
   };
 
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm h-full overflow-hidden">
+    <div className="bg-white rounded-lg p-4 shadow-sm h-full overflow-hidden google-card">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg font-medium text-gray-800">Returns Overview</h2>
         <div className="relative" ref={dropdownRef}>
@@ -163,7 +163,7 @@ export function ReturnsChart({ chartData: initialChartData }) {
                     <button
                       onClick={() => handleTimeRangeChange(range)}
                       className={`block w-full text-left px-4 py-2 text-sm ${
-                        timeRange === range ? 'bg-indigo-50 text-indigo-600' : 'text-gray-700 hover:bg-gray-50'
+                        timeRange === range ? 'bg-google-blue bg-opacity-10 text-google-blue' : 'text-gray-700 hover:bg-gray-50'
                       }`}
                     >
                       {range}
@@ -184,8 +184,8 @@ export function ReturnsChart({ chartData: initialChartData }) {
           >
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6366F1" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#6366F1" stopOpacity={0} />
+                <stop offset="5%" stopColor="#4e8de7" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#4e8de7" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} stroke="#EEF2F6" />
@@ -198,7 +198,7 @@ export function ReturnsChart({ chartData: initialChartData }) {
               label={{ 
                 value: 'Time Period', 
                 position: 'insideBottom', 
-                offset: -15, 
+                offset: -5, 
                 fill: '#6B7280',
                 fontSize: 12
               }}
@@ -223,10 +223,10 @@ export function ReturnsChart({ chartData: initialChartData }) {
             <Line
               type="monotone"
               dataKey="value"
-              stroke="#6366F1"
+              stroke="#4e8de7"
               strokeWidth={3}
               dot={false}
-              activeDot={{ r: 6, fill: '#6366F1', stroke: '#fff', strokeWidth: 2 }}
+              activeDot={{ r: 6, fill: '#4e8de7', stroke: '#fff', strokeWidth: 2 }}
               fillOpacity={1}
               fill="url(#colorValue)"
             />

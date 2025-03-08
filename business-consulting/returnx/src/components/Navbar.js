@@ -34,11 +34,11 @@ export function Navbar() {
       <div className="p-4 border-b flex items-center gap-3">
         <div className="relative h-8 w-8">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" className="h-8 w-8">
-            <path d="M50 10 C 25 10, 10 30, 10 50 C 10 70, 30 90, 50 90 C 70 90, 90 70, 90 50 C 90 30, 75 10, 50 10" fill="none" stroke="#333D79" strokeWidth="8" />
-            <path d="M70 25 L 45 65 L 30 50" fill="none" stroke="#333D79" strokeWidth="8" strokeLinecap="round" />
+            <path d="M50 10 C 25 10, 10 30, 10 50 C 10 70, 30 90, 50 90 C 70 90, 90 70, 90 50 C 90 30, 75 10, 50 10" fill="none" stroke="#4e8de7" strokeWidth="8" />
+            <path d="M70 25 L 45 65 L 30 50" fill="none" stroke="#4e8de7" strokeWidth="8" strokeLinecap="round" />
           </svg>
         </div>
-        <span className="text-xl font-semibold text-indigo-800 hidden md:block">AICloud</span>
+        <span className="text-xl font-semibold text-google-blue hidden md:block">ReturnX</span>
       </div>
 
       <nav className="flex-1 pt-6">
@@ -50,10 +50,10 @@ export function Navbar() {
                 <Link
                   href={item.href}
                   className={`flex items-center px-4 py-3 text-gray-600 transition-colors ${
-                    isActive ? 'bg-indigo-50 text-indigo-800 border-r-4 border-indigo-600' : 'hover:bg-gray-100'
+                    isActive ? 'bg-google-blue bg-opacity-10 text-google-blue border-r-4 border-google-blue' : 'hover:bg-gray-100'
                   }`}
                 >
-                  <item.icon className={`h-5 w-5 ${isActive ? 'text-indigo-600' : 'text-gray-500'}`} />
+                  <item.icon className={`h-5 w-5 ${isActive ? 'text-google-blue' : 'text-gray-500'}`} />
                   <span className={`ml-3 hidden md:block ${isActive ? 'font-medium' : ''}`}>
                     {item.name}
                   </span>

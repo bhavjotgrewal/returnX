@@ -1,37 +1,37 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-      './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-      './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-      './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    ],
-    theme: {
-      extend: {
-        keyframes: {
-          fadeIn: {
-            '0%': { opacity: '0', transform: 'translateY(10px)' },
-            '100%': { opacity: '1', transform: 'translateY(0)' },
-          },
-          fadeOut: {
-            '0%': { opacity: '1', transform: 'translateY(0)' },
-            '100%': { opacity: '0', transform: 'translateY(10px)' },
-          },
-          slideIn: {
-            '0%': { transform: 'translateX(100%)' },
-            '100%': { transform: 'translateX(0)' },
-          },
-          slideOut: {
-            '0%': { transform: 'translateX(0)' },
-            '100%': { transform: 'translateX(100%)' },
-          },
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'google': {
+          'blue': '#4e8de7',
+          'purple': '#9374c3',
+          'pink': '#b86991',
+          'indigo': '#837bcf',
+          'dark': '#595d82',
+          'light-blue': '#5484b9',
         },
-        animation: {
-          'fade-in': 'fadeIn 0.3s ease-out forwards',
-          'fade-out': 'fadeOut 0.3s ease-out forwards',
-          'slide-in': 'slideIn 0.3s ease-out forwards',
-          'slide-out': 'slideOut 0.3s ease-out forwards',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'pulse': 'pulse 1.5s ease-in-out infinite',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        pulse: {
+          '0%, 100%': { transform: 'rotate(45deg) scale(1)' },
+          '50%': { transform: 'rotate(45deg) scale(1.1)' },
         },
       },
     },
-    plugins: [],
-  };
+  },
+  plugins: [],
+};

@@ -1,10 +1,20 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --background-rgb: 255, 255, 255;
   --foreground-rgb: 23, 23, 23;
+  --google-blue: 78, 141, 231;
+  --google-purple: 147, 116, 195;
+  --google-pink: 184, 105, 145;
+  --google-indigo: 131, 123, 207;
+  --google-dark: 89, 93, 130;
+  --google-light-blue: 84, 132, 185;
 }
 
 @theme inline {
@@ -27,12 +37,92 @@ html, body {
   max-width: 100vw;
 }
 
+/* Google-style loader */
+.google-loader {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(66, 133, 244, 0.1);
+  border-radius: 50%;
+  border-top-color: #4285f4;
+  animation: google-spin 1s linear infinite;
+}
+
+@keyframes google-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Gemini loader */
+.gemini-loader {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
   .responsive-padding {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+
+/* Google-style footer */
+.google-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #dadce0;
+  color: #70757a;
+  font-size: 14px;
+}
+
+.google-footer a {
+  color: #70757a;
+  text-decoration: none;
+}
+
+.google-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Google-style buttons */
+.google-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.google-button:hover {
+  background-color: #1a73e8;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+              0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+/* Google Material Design card styling */
+.google-card {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+              0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
 
 .animate-fade-in {
@@ -59,7 +149,7 @@ html, body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c7c7c7;
+  background: #dadce0;
   border-radius: 4px;
 }
 
@@ -72,4 +162,76 @@ html, body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+}
+
+/* Fix scrollbar issues */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #dadce0 #f8f9fa;
+}
+
+/* Only show scrollbar when needed */
+.overflow-x-hidden {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.overflow-x-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure consistent width for main content area */
+.max-w-7xl {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Make all buttons have pointer cursor */
+button {
+  cursor: pointer;
+}
+
+/* Improved hover effects for buttons */
+button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Specifically style Google buttons */
+.google-button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.25px;
+  cursor: pointer;
+  transition: background-color 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.google-button:hover {
+  background-color: #1a73e8;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+              0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+/* Improve transitions for tab switching */
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure all interactive elements have hover effects */
+a:hover, 
+.cursor-pointer:hover,
+button:hover,
+[role="button"]:hover {
+  opacity: 0.9;
+}
+
+/* Add subtle grey background on hover for interactive items */
+.hover-effect:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }

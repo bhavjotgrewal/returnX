@@ -2,6 +2,7 @@
 
 import { ArrowUp, ArrowDown, Minus } from 'lucide-react';
 
+// Ensure we're using a named export, not default export
 export function CustomerSentiment({ sentimentData }) {
   const total = sentimentData.positive + sentimentData.neutral + sentimentData.negative;
   
@@ -25,7 +26,7 @@ export function CustomerSentiment({ sentimentData }) {
   const neutralChange = calculateChange(sentimentData.neutral, sentimentData.previousNeutral);
 
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm h-full">
+    <div className="bg-white rounded-lg p-4 shadow-sm h-full google-card" style={{ minHeight: '320px' }}>
       <h2 className="text-lg font-medium text-gray-800 mb-4">Customer Sentiment Analysis</h2>
       
       <div className="flex mb-6">

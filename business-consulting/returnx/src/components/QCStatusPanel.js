@@ -1,11 +1,28 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckCircle, AlertTriangle, Clock, ChevronRight } from 'lucide-react';
 
 export function QCStatusPanel({ qcItems }) {
   const [activeTab, setActiveTab] = useState('pending');
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  
+  const changeTab = (tab) => {
+    if (tab !== activeTab) {
+      setIsTransitioning(true);
+      
+      // After a slight delay, change the tab
+      setTimeout(() => {
+        setActiveTab(tab);
+        
+        // Wait for content to change, then remove transition state
+        setTimeout(() => {
+          setIsTransitioning(false);
+        }, 150);
+      }, 150);
+    }
+  };
   
   const filteredItems = qcItems.filter(item => {
     if (activeTab === 'pending') return item.status === 'pending';
@@ -39,7 +56,7 @@ export function QCStatusPanel({ qcItems }) {
   const counts = getCounts();
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden h-full">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden h-full google-card" style={{ minHeight: '350px' }}>
       <div className="bg-gray-50 p-4 border-b">
         <h2 className="text-lg font-medium text-gray-800">Return QC Status</h2>
         <p className="text-sm text-gray-500">Customer-submitted return photos</p>
@@ -47,35 +64,38 @@ export function QCStatusPanel({ qcItems }) {
       
       <div className="flex border-b">
         <button
-          className={`flex-1 py-2 text-center text-sm font-medium ${
-            activeTab === 'pending' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500'
+          className={`flex-1 py-2 text-center text-sm font-medium cursor-pointer ${
+            activeTab === 'pending' ? 'text-google-blue border-b-2 border-google-blue' : 'text-gray-500 hover:bg-gray-50'
           }`}
-          onClick={() => setActiveTab('pending')}
+          onClick={() => changeTab('pending')}
         >
           Pending ({counts.pending})
         </button>
         <button
-          className={`flex-1 py-2 text-center text-sm font-medium ${
-            activeTab === 'approved' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500'
+          className={`flex-1 py-2 text-center text-sm font-medium cursor-pointer ${
+            activeTab === 'approved' ? 'text-google-blue border-b-2 border-google-blue' : 'text-gray-500 hover:bg-gray-50'
           }`}
-          onClick={() => setActiveTab('approved')}
+          onClick={() => changeTab('approved')}
         >
           Approved ({counts.approved})
         </button>
         <button
-          className={`flex-1 py-2 text-center text-sm font-medium ${
-            activeTab === 'rejected' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-500'
+          className={`flex-1 py-2 text-center text-sm font-medium cursor-pointer ${
+            activeTab === 'rejected' ? 'text-google-blue border-b-2 border-google-blue' : 'text-gray-500 hover:bg-gray-50'
           }`}
-          onClick={() => setActiveTab('rejected')}
+          onClick={() => changeTab('rejected')}
         >
           Rejected ({counts.rejected})
         </button>
       </div>
       
-      <div className="divide-y overflow-auto" style={{ maxHeight: '350px' }}>
+      <div 
+        className={`divide-y transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`} 
+        style={{ height: '350px', maxHeight: '350px', overflowY: 'auto' }}
+      >
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
-            <div key={item.id} className="p-3 hover:bg-gray-50 transition-colors flex items-center">
+            <div key={item.id} className="p-3 hover:bg-gray-50 transition-colors flex items-center cursor-pointer">
               <div className="relative h-12 w-12 rounded-md overflow-hidden mr-3 flex-shrink-0">
                 <Image
                   src={item.image || "/api/placeholder/48/48"}
@@ -109,7 +129,7 @@ export function QCStatusPanel({ qcItems }) {
       </div>
       
       <div className="p-3 bg-gray-50 border-t">
-        <button className="w-full py-2 text-indigo-600 text-sm font-medium hover:text-indigo-700 transition-colors text-center">
+        <button className="w-full py-2 text-google-blue text-sm font-medium hover:text-google-light-blue transition-colors text-center cursor-pointer">
           View All QC Items
         </button>
       </div>
