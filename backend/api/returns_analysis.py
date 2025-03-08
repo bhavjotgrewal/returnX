@@ -204,7 +204,7 @@ def generate_gemini_suggestions(product_details, return_reasons):
     """
     
     # Initialize Gemini model
-    model = genai.GenerativeModel('gemini-pro')
+    model = genai.GenerativeModel('gemini-2.0-flash')
     
     # Generate content with Gemini
     response = model.generate_content(prompt)

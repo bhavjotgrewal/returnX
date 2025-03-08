@@ -83,7 +83,7 @@ def analyze_return_image(image_path, product_info, reason):
             image_bytes = f.read()
         
         # Initialize Gemini model
-        model = genai.GenerativeModel('gemini-pro-vision')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         
         # Create prompt for the model
         prompt = f"""

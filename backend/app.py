@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import os
 
+
 # Import blueprints
 from api.settings import settings_bp
 from api.performance import performance_bp
@@ -9,6 +10,11 @@ from api.promote import promote_bp
 from api.returns import returns_bp
 from api.products import products_bp
 from api.returns_analysis import returns_analysis_bp
+
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
