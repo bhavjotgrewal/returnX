@@ -12,11 +12,11 @@ const HeroSection = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="absolute inset-0 bg-gray-800 bg-opacity-20">
+      <div className="absolute inset-0 bg-gray-800 bg-opacity-20 overflow-hidden">
         <img
           src="/images/hero-background.jpg"
           alt="Hero background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-top"
         />
       </div>
       <div className="absolute inset-0 flex flex-col justify-center items-start p-12 text-white">
