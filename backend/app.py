@@ -47,6 +47,10 @@ def create_app():
 # Create the application instance
 app = create_app()
 
+# Add for Vercel serverless
+def handler(request):
+    return app(request)
+
 if __name__ == "__main__":
     # Check for Gemini API key
     if not os.environ.get('GEMINI_API_KEY'):
