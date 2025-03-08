@@ -27,9 +27,6 @@ def debug():
     return jsonify({
         "status": "ok", 
         "message": "Debug endpoint is working!",
-        "env": {k: v for k, v in os.environ.items() if not k.startswith('AWS_')}
+        "path": os.path.abspath(__file__),
+        "directory": os.listdir(current_dir)
     })
-
-# For local development & testing
-if __name__ == "__main__":
-    flask_app.run(debug=True)
