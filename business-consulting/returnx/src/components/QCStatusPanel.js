@@ -56,7 +56,7 @@ export function QCStatusPanel({ qcItems }) {
   const counts = getCounts();
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden h-full google-card">
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden h-full google-card" style={{ display: 'flex', flexDirection: 'column' }}>
       <div className="bg-gray-50 p-3 border-b flex justify-between items-center">
         <div>
           <h2 className="text-lg font-medium text-gray-800">Return QC Status</h2>
@@ -107,7 +107,7 @@ export function QCStatusPanel({ qcItems }) {
       
       <div 
         className={`divide-y transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`} 
-        style={{ minHeight: '240px', maxHeight: '240px', overflowY: 'auto' }}
+        style={{ minHeight: '240px', maxHeight: '240px', overflowY: 'auto', flex: '1 1 auto' }}
       >
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
@@ -144,7 +144,7 @@ export function QCStatusPanel({ qcItems }) {
         )}
       </div>
       
-      <div className="p-2 bg-gray-50 border-t flex justify-between items-center">
+      <div className="p-2 bg-gray-50 border-t flex justify-between items-center" style={{ marginTop: 'auto' }}>
         <span className="text-xs text-gray-500">Last updated: Today, 10:45 AM</span>
         <button className="text-google-blue text-sm font-medium hover:text-google-light-blue transition-colors text-center cursor-pointer">
           View All QC Items
