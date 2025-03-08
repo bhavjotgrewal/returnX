@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowUp, ArrowDown, Minus } from 'lucide-react';
+import { ArrowUp, ArrowDown, Minus, BarChart2 } from 'lucide-react';
 
 // Ensure we're using a named export, not default export
 export function CustomerSentiment({ sentimentData }) {
@@ -26,11 +26,16 @@ export function CustomerSentiment({ sentimentData }) {
   const neutralChange = calculateChange(sentimentData.neutral, sentimentData.previousNeutral);
 
   return (
-    <div className="bg-white rounded-lg p-4 shadow-sm h-full google-card" style={{ minHeight: '320px' }}>
-      <h2 className="text-lg font-medium text-gray-800 mb-4">Customer Sentiment Analysis</h2>
+    <div className="bg-white rounded-lg p-4 shadow-sm h-full google-card">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg font-medium text-gray-800">Customer Sentiment Analysis</h2>
+        <div className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+          Last 30 days
+        </div>
+      </div>
       
-      <div className="flex mb-6">
-        <div className="flex-1 relative h-8" style={{ flex: sentimentData.positive }}>
+      <div className="flex mb-4">
+        <div className="flex-1 relative h-6" style={{ flex: sentimentData.positive }}>
           <div className="absolute inset-0 bg-green-100 rounded-l-full"></div>
           <div className="absolute inset-0 flex items-center pl-3">
             <span className="text-xs font-medium text-green-800">
@@ -38,7 +43,7 @@ export function CustomerSentiment({ sentimentData }) {
             </span>
           </div>
         </div>
-        <div className="flex-1 relative h-8" style={{ flex: sentimentData.neutral }}>
+        <div className="flex-1 relative h-6" style={{ flex: sentimentData.neutral }}>
           <div className="absolute inset-0 bg-gray-100"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-xs font-medium text-gray-800">
@@ -46,7 +51,7 @@ export function CustomerSentiment({ sentimentData }) {
             </span>
           </div>
         </div>
-        <div className="flex-1 relative h-8" style={{ flex: sentimentData.negative }}>
+        <div className="flex-1 relative h-6" style={{ flex: sentimentData.negative }}>
           <div className="absolute inset-0 bg-red-100 rounded-r-full"></div>
           <div className="absolute inset-0 flex items-center justify-end pr-3">
             <span className="text-xs font-medium text-red-800">
@@ -56,7 +61,7 @@ export function CustomerSentiment({ sentimentData }) {
         </div>
       </div>
       
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-3 mb-4">
         <SentimentCard 
           title="Positive" 
           value={sentimentData.positive} 
@@ -82,8 +87,54 @@ export function CustomerSentiment({ sentimentData }) {
         />
       </div>
       
-      <div className="mt-5 border-t pt-4">
-        <p className="text-sm text-gray-600">
+      <div className="border-t pt-3 mt-2">
+        <h3 className="text-sm font-medium mb-2">Top Sentiment Keywords</h3>
+        <div className="flex flex-wrap gap-2">
+          <span className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full">Quality (+24%)</span>
+          <span className="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full">Comfortable (+18%)</span>
+          <span className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded-full">Size (-15%)</span>
+          <span className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded-full">Shipping (-12%)</span>
+          <span className="text-xs bg-gray-50 text-gray-700 px-2 py-1 rounded-full">Material (0%)</span>
+        </div>
+        
+        <div className="mt-4 border-t pt-3">
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-sm font-medium">Sentiment Trend</h3>
+            <span className="text-xs text-gray-500">Last 7 days</span>
+          </div>
+          <div className="flex items-center justify-between h-16 px-2">
+            <div className="flex flex-col items-center">
+              <div className="bg-green-100 w-6 h-8 rounded-t-sm"></div>
+              <span className="text-xs text-gray-500 mt-1">Mon</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-green-100 w-6 h-12 rounded-t-sm"></div>
+              <span className="text-xs text-gray-500 mt-1">Tue</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-gray-100 w-6 h-6 rounded-t-sm"></div>
+              <span className="text-xs text-gray-500 mt-1">Wed</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-red-100 w-6 h-10 rounded-t-sm"></div>
+              <span className="text-xs text-gray-500 mt-1">Thu</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-green-100 w-6 h-14 rounded-t-sm"></div>
+              <span className="text-xs text-gray-500 mt-1">Fri</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-green-100 w-6 h-10 rounded-t-sm"></div>
+              <span className="text-xs text-gray-500 mt-1">Sat</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <div className="bg-green-100 w-6 h-12 rounded-t-sm"></div>
+              <span className="text-xs text-gray-500 mt-1">Sun</span>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-xs text-gray-500 mt-3">
           Sentiment is analyzed from customer return comments and feedback.
         </p>
       </div>
@@ -121,10 +172,10 @@ function SentimentCard({ title, value, percentage, change, color }) {
   };
 
   return (
-    <div className={`rounded-lg p-3 ${getColorClass()}`}>
+    <div className={`rounded-lg p-2 ${getColorClass()}`}>
       <h3 className="text-xs font-medium mb-1">{title}</h3>
       <div className="flex justify-between items-end">
-        <p className="text-lg font-semibold">{value}</p>
+        <p className="text-base font-semibold">{value}</p>
         <div className="flex items-center space-x-1">
           <div className={`flex items-center ${getChangeColorClass()}`}>
             {getChangeIcon()}

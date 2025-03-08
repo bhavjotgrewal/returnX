@@ -56,15 +56,31 @@ export function QCStatusPanel({ qcItems }) {
   const counts = getCounts();
 
   return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden h-full google-card" style={{ minHeight: '350px' }}>
-      <div className="bg-gray-50 p-4 border-b">
-        <h2 className="text-lg font-medium text-gray-800">Return QC Status</h2>
-        <p className="text-sm text-gray-500">Customer-submitted return photos</p>
+    <div className="bg-white rounded-lg shadow-sm overflow-hidden h-full google-card">
+      <div className="bg-gray-50 p-3 border-b flex justify-between items-center">
+        <div>
+          <h2 className="text-lg font-medium text-gray-800">Return QC Status</h2>
+          <p className="text-xs text-gray-500">Customer-submitted return photos</p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <div className="flex items-center">
+            <div className="h-2 w-2 rounded-full bg-amber-500 mr-1"></div>
+            <span className="text-xs text-gray-500">Pending: {counts.pending}</span>
+          </div>
+          <div className="flex items-center">
+            <div className="h-2 w-2 rounded-full bg-green-500 mr-1"></div>
+            <span className="text-xs text-gray-500">Approved: {counts.approved}</span>
+          </div>
+          <div className="flex items-center">
+            <div className="h-2 w-2 rounded-full bg-red-500 mr-1"></div>
+            <span className="text-xs text-gray-500">Rejected: {counts.rejected}</span>
+          </div>
+        </div>
       </div>
       
       <div className="flex border-b">
         <button
-          className={`flex-1 py-2 text-center text-sm font-medium cursor-pointer ${
+          className={`flex-1 py-1.5 text-center text-sm font-medium cursor-pointer ${
             activeTab === 'pending' ? 'text-google-blue border-b-2 border-google-blue' : 'text-gray-500 hover:bg-gray-50'
           }`}
           onClick={() => changeTab('pending')}
@@ -72,7 +88,7 @@ export function QCStatusPanel({ qcItems }) {
           Pending ({counts.pending})
         </button>
         <button
-          className={`flex-1 py-2 text-center text-sm font-medium cursor-pointer ${
+          className={`flex-1 py-1.5 text-center text-sm font-medium cursor-pointer ${
             activeTab === 'approved' ? 'text-google-blue border-b-2 border-google-blue' : 'text-gray-500 hover:bg-gray-50'
           }`}
           onClick={() => changeTab('approved')}
@@ -80,7 +96,7 @@ export function QCStatusPanel({ qcItems }) {
           Approved ({counts.approved})
         </button>
         <button
-          className={`flex-1 py-2 text-center text-sm font-medium cursor-pointer ${
+          className={`flex-1 py-1.5 text-center text-sm font-medium cursor-pointer ${
             activeTab === 'rejected' ? 'text-google-blue border-b-2 border-google-blue' : 'text-gray-500 hover:bg-gray-50'
           }`}
           onClick={() => changeTab('rejected')}
@@ -91,12 +107,12 @@ export function QCStatusPanel({ qcItems }) {
       
       <div 
         className={`divide-y transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`} 
-        style={{ height: '350px', maxHeight: '350px', overflowY: 'auto' }}
+        style={{ minHeight: '240px', maxHeight: '240px', overflowY: 'auto' }}
       >
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
-            <div key={item.id} className="p-3 hover:bg-gray-50 transition-colors flex items-center cursor-pointer">
-              <div className="relative h-12 w-12 rounded-md overflow-hidden mr-3 flex-shrink-0">
+            <div key={item.id} className="p-2 hover:bg-gray-50 transition-colors flex items-center cursor-pointer">
+              <div className="relative h-10 w-10 rounded-md overflow-hidden mr-3 flex-shrink-0">
                 <Image
                   src={item.image || "/api/placeholder/48/48"}
                   alt={item.productName}
@@ -122,14 +138,15 @@ export function QCStatusPanel({ qcItems }) {
             </div>
           ))
         ) : (
-          <div className="py-8 text-center text-gray-500">
+          <div className="py-4 text-center text-gray-500">
             No {activeTab} returns found
           </div>
         )}
       </div>
       
-      <div className="p-3 bg-gray-50 border-t">
-        <button className="w-full py-2 text-google-blue text-sm font-medium hover:text-google-light-blue transition-colors text-center cursor-pointer">
+      <div className="p-2 bg-gray-50 border-t flex justify-between items-center">
+        <span className="text-xs text-gray-500">Last updated: Today, 10:45 AM</span>
+        <button className="text-google-blue text-sm font-medium hover:text-google-light-blue transition-colors text-center cursor-pointer">
           View All QC Items
         </button>
       </div>
