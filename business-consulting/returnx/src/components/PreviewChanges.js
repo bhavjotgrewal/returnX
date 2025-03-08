@@ -1,52 +1,60 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-// Change to default export
-export default function PreviewChanges({ onReject }) {
+export default function PreviewChanges({ title, description, onAccept, onReject, isSubmitting }) {
+  const [editedText, setEditedText] = useState(description);
+  
   return (
-    <div className="p-6 flex flex-col items-center justify-center space-y-4 min-h-[400px]">
-      <motion.h2 
-        initial={{ y: 20, opacity: 0 }}
+    <div className="p-6 flex flex-col space-y-6">
+      <motion.div 
+        initial={{ y: 10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="text-xl font-medium text-indigo-600"
       >
-        Preview Changes
-      </motion.h2>
-      
-      <motion.div 
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="w-6 h-6"
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 3H19V5H15V3ZM15 7H19V9H15V7ZM15 11H19V13H15V11ZM15 15H19V17H15V15ZM3 3H13V9H3V3ZM3 11H13V21H3V11ZM5 5V7H11V5H5ZM5 13V19H11V13H5Z" fill="#6B7280"/>
-        </svg>
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Suggestion Title</h4>
+        <p className="text-gray-900 font-medium">{title}</p>
       </motion.div>
       
       <motion.div 
-        initial={{ y: 20, opacity: 0 }}
+        initial={{ y: 10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="w-full"
+      >
+        <h4 className="text-sm font-medium text-gray-500 mb-2">Edit Description</h4>
+        <textarea
+          value={editedText}
+          onChange={(e) => setEditedText(e.target.value)}
+          className="w-full border border-gray-300 rounded-md p-3 h-32 focus:ring-2 focus:ring-google-blue focus:border-google-blue"
+          placeholder="Edit the suggestion text..."
+        />
+      </motion.div>
+      
+      <motion.div 
+        initial={{ y: 10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3 }}
-        className="flex gap-4 mt-8"
+        className="flex justify-end space-x-3 pt-2"
       >
         <button 
           onClick={onReject}
-          className="bg-white border border-red-500 text-red-500 hover:bg-red-50 px-6 py-2 rounded-full flex items-center justify-center gap-2 transition-all duration-200"
+          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+          disabled={isSubmitting}
         >
-          <span>Reject</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          Cancel
         </button>
         
-        <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-full flex items-center justify-center gap-2 transition-all duration-200">
-          <span>Accept</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+        <button 
+          onClick={() => onAccept(editedText)}
+          disabled={isSubmitting}
+          className="google-button px-4 py-2 rounded-md font-medium flex items-center"
+        >
+          {isSubmitting && (
+            <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+          )}
+          {isSubmitting ? 'Applying...' : 'Apply Changes'}
         </button>
       </motion.div>
     </div>

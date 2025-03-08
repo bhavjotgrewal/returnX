@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import ActionCard from "@/components/ActionCard";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/components/Header";
 import { GoogleLoader, GeminiLoader } from "@/components/LoadingIndicator";
 
@@ -74,6 +74,17 @@ export default function PromotePage() {
     }, 800);
   };
   
+  // Handle action applied (remove from list)
+  const handleActionApplied = (actionId) => {
+    if (data && data.suggestedActions) {
+      const updatedActions = data.suggestedActions.filter(action => action.id !== actionId);
+      setData({
+        ...data,
+        suggestedActions: updatedActions
+      });
+    }
+  };
+  
   // Allow manual retry
   const handleRetry = () => {
     setIsLoading(true);
@@ -114,21 +125,25 @@ export default function PromotePage() {
           <h1 className="text-3xl font-semibold text-google-blue">Suggested Actions</h1>
           
           <div className="grid grid-cols-1 gap-6">
-            {data.suggestedActions.slice(0, visibleCards).map((action, index) => (
-              <motion.div
-                key={action.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <ActionCard 
-                  number={action.id}
-                  title={action.title}
-                  image={action.image}
-                  description={action.description}
-                />
-              </motion.div>
-            ))}
+            <AnimatePresence>
+              {data.suggestedActions.slice(0, visibleCards).map((action, index) => (
+                <motion.div
+                  key={action.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <ActionCard 
+                    number={action.id}
+                    title={action.title}
+                    image={action.image}
+                    description={action.description}
+                    onActionApplied={handleActionApplied}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
             
             {visibleCards < data.suggestedActions.length && (
               <div className="flex justify-center items-center py-8">
@@ -136,6 +151,24 @@ export default function PromotePage() {
                   <GeminiLoader />
                 </div>
               </div>
+            )}
+            
+            {data.suggestedActions.length === 0 && (
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center justify-center py-16 text-center"
+              >
+                <div className="bg-gray-50 rounded-full p-6 mb-4">
+                  <svg className="h-12 w-12 text-google-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-medium text-gray-900 mb-2">All Actions Applied!</h3>
+                <p className="text-gray-600 max-w-md">
+                  You've successfully applied all suggested actions. Check back later for new suggestions.
+                </p>
+              </motion.div>
             )}
           </div>
         </motion.div>
