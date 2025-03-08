@@ -33,30 +33,36 @@ export function ReturnsChart({ chartData: initialChartData }) {
   ];
   
   const handleTimeRangeChange = (range) => {
-    setTimeRange(range);
-    setIsDropdownOpen(false);
-    
-    // Generate different data based on the selected range
-    let newData;
-    
-    switch(range) {
-      case 'Last Month':
-        newData = generateMockData(30000, 55000, false);
-        break;
-      case 'Last 3 Months':
-        newData = generateMockData(35000, 65000, false);
-        break;
-      case 'Last 6 Months':
-        newData = generateMockData(25000, 70000, false);
-        break;
-      case 'This Year':
-        newData = generateMockData(20000, 80000, false);
-        break;
-      default: // This Month
-        newData = generateMockData(30000, 60000, false);
+    // Only update if the selected range is different from the current one
+    if (range !== timeRange) {
+      setTimeRange(range);
+      setIsDropdownOpen(false);
+      
+      // Generate different data based on the selected range
+      let newData;
+      
+      switch(range) {
+        case 'Last Month':
+          newData = generateMockData(30000, 55000, false);
+          break;
+        case 'Last 3 Months':
+          newData = generateMockData(35000, 65000, false);
+          break;
+        case 'Last 6 Months':
+          newData = generateMockData(25000, 70000, false);
+          break;
+        case 'This Year':
+          newData = generateMockData(20000, 80000, false);
+          break;
+        default: // This Month
+          newData = generateMockData(30000, 60000, false);
+      }
+      
+      setChartData(newData);
+    } else {
+      // Just close the dropdown if the same range is selected
+      setIsDropdownOpen(false);
     }
-    
-    setChartData(newData);
   };
   
   // Function to generate mock data
@@ -133,7 +139,7 @@ export function ReturnsChart({ chartData: initialChartData }) {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-google-blue text-white px-3 py-2 rounded shadow-md">
+        <div className="bg-google-blue text-white px-3 py-2 rounded shadow-md" style={{ backgroundColor: "#4e8de7" }}>
           <p className="font-semibold">{payload[0].payload.date}</p>
           <p className="text-sm">{payload[0].value.toLocaleString()}</p>
         </div>
@@ -198,7 +204,7 @@ export function ReturnsChart({ chartData: initialChartData }) {
               label={{ 
                 value: 'Time Period', 
                 position: 'insideBottom', 
-                offset: -5, 
+                offset: -15, 
                 fill: '#6B7280',
                 fontSize: 12
               }}

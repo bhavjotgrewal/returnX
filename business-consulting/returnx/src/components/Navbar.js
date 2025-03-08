@@ -23,7 +23,7 @@ export function Navbar() {
       icon: MessageSquareText,
     },
     {
-      name: 'Setting',
+      name: 'Settings',
       href: '/settings',
       icon: Settings,
     },

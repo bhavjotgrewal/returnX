@@ -30,7 +30,7 @@ export function CustomerSentiment({ sentimentData }) {
       <h2 className="text-lg font-medium text-gray-800 mb-4">Customer Sentiment Analysis</h2>
       
       <div className="flex mb-6">
-        <div className="flex-1 relative h-8">
+        <div className="flex-1 relative h-8" style={{ flex: sentimentData.positive }}>
           <div className="absolute inset-0 bg-green-100 rounded-l-full"></div>
           <div className="absolute inset-0 flex items-center pl-3">
             <span className="text-xs font-medium text-green-800">
@@ -38,7 +38,7 @@ export function CustomerSentiment({ sentimentData }) {
             </span>
           </div>
         </div>
-        <div className="flex-1 relative h-8">
+        <div className="flex-1 relative h-8" style={{ flex: sentimentData.neutral }}>
           <div className="absolute inset-0 bg-gray-100"></div>
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-xs font-medium text-gray-800">
@@ -46,7 +46,7 @@ export function CustomerSentiment({ sentimentData }) {
             </span>
           </div>
         </div>
-        <div className="flex-1 relative h-8">
+        <div className="flex-1 relative h-8" style={{ flex: sentimentData.negative }}>
           <div className="absolute inset-0 bg-red-100 rounded-r-full"></div>
           <div className="absolute inset-0 flex items-center justify-end pr-3">
             <span className="text-xs font-medium text-red-800">

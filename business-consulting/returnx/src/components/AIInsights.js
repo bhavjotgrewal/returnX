@@ -1,40 +1,43 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Lightbulb } from 'lucide-react';
 
 export function AIInsights({ insights }) {
   const [currentInsight, setCurrentInsight] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
   
-  const handlePrevious = () => {
-    if (!transitioning) {
-      setTransitioning(true);
-      setTimeout(() => {
-        setCurrentInsight(prev => (prev === 0 ? insights.length - 1 : prev - 1));
-        setTransitioning(false);
-      }, 300);
-    }
-  };
+  const currentInsightData = insights[currentInsight];
   
   const handleNext = () => {
-    if (!transitioning) {
+    if (currentInsight < insights.length - 1) {
       setTransitioning(true);
       setTimeout(() => {
-        setCurrentInsight(prev => (prev === insights.length - 1 ? 0 : prev + 1));
+        setCurrentInsight(currentInsight + 1);
         setTransitioning(false);
       }, 300);
     }
   };
   
-  const currentInsightData = insights[currentInsight];
+  const handlePrevious = () => {
+    if (currentInsight > 0) {
+      setTransitioning(true);
+      setTimeout(() => {
+        setCurrentInsight(currentInsight - 1);
+        setTransitioning(false);
+      }, 300);
+    }
+  };
 
   return (
     <div className="bg-gradient-to-r from-[#4e8de7] via-[#9374c3] to-[#b86991] rounded-lg p-5 shadow-md text-white h-full google-card flex flex-col justify-between">
       <div>
         <div className="flex justify-between items-center mb-4">
           <div className="flex items-center">
-            <Lightbulb className="h-5 w-5 mr-2" />
+            <img 
+              src="/gemini-icon-white.png" 
+              alt="Gemini" 
+              className="h-14 w-14 mr-2" 
+            />
             <h2 className="text-lg font-medium">Gemini Insights</h2>
           </div>
           
