@@ -1,7 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
-
 
 # Import blueprints
 from api.settings import settings_bp
@@ -16,43 +15,45 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
-def create_app():
-    app = Flask(__name__)
-    
-    # Configure CORS properly with explicit options
-    CORS(app, resources={r"/*": {"origins": "*", "supports_credentials": True, "allow_headers": "*", "expose_headers": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]}})
-    
-    # Register blueprints
-    app.register_blueprint(settings_bp, url_prefix='/api/settings')
-    app.register_blueprint(performance_bp, url_prefix='/api/performance')
-    app.register_blueprint(promote_bp, url_prefix='/api/promote')
-    app.register_blueprint(returns_bp, url_prefix='/api/returns')
-    app.register_blueprint(products_bp, url_prefix='/api/products')
-    app.register_blueprint(returns_analysis_bp, url_prefix='/api/returns_analysis')
-    
-    # Root route
-    @app.route("/")
-    def home():
-        return jsonify({"message": "Hello from Returns-X API!"})
-    
-    # Health check route
-    @app.route("/api/health")
-    def health():
-        return jsonify({"status": "ok"})
-    
-    # Create data directories if running locally
-    if not os.environ.get('VERCEL'):
-        os.makedirs('data', exist_ok=True)
-        os.makedirs('data/return_images', exist_ok=True)
-    else:
-        # In Vercel, we can use /tmp which is writable
-        os.makedirs('/tmp', exist_ok=True)
-        os.makedirs('/tmp/return_images', exist_ok=True)
-    
-    return app
+app = Flask(__name__)
 
-# Create the application instance
-app = create_app()
+# Enable CORS properly
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Additional CORS headers for all responses
+@app.after_request
+def add_cors_headers(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
+
+# Register blueprints - without the /api prefix since Vercel handles that
+app.register_blueprint(settings_bp, url_prefix='/settings')
+app.register_blueprint(performance_bp, url_prefix='/performance')
+app.register_blueprint(promote_bp, url_prefix='/promote')
+app.register_blueprint(returns_bp, url_prefix='/returns')
+app.register_blueprint(products_bp, url_prefix='/products')
+app.register_blueprint(returns_analysis_bp, url_prefix='/returns_analysis')
+
+# Root route
+@app.route("/")
+def home():
+    return jsonify({"message": "Hello from Returns-X API!"})
+
+# Health check route
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"})
+
+# Create data directories
+if not os.environ.get('VERCEL'):
+    os.makedirs('data', exist_ok=True)
+    os.makedirs('data/return_images', exist_ok=True)
+else:
+    os.makedirs('/tmp', exist_ok=True)
+    os.makedirs('/tmp/return_images', exist_ok=True)
 
 # For local development
 if __name__ == "__main__":
