@@ -219,7 +219,7 @@ export function QCStatusPanel() {
           }`}
           onClick={() => changeTab('approved')}
         >
-          Approved ({counts.approved})
+          Viewed ({counts.approved})
         </button>
         <button
           className={`flex-1 py-1.5 text-center text-sm font-medium cursor-pointer ${
