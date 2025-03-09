@@ -18,7 +18,9 @@ load_dotenv()
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)  # Enable CORS for all routes
+    
+    # Configure CORS properly with explicit options
+    CORS(app, resources={r"/*": {"origins": "*", "supports_credentials": True, "allow_headers": "*", "expose_headers": "*", "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]}})
     
     # Register blueprints
     app.register_blueprint(settings_bp, url_prefix='/api/settings')
