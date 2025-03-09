@@ -4,6 +4,8 @@ import os
 import base64
 import uuid
 from datetime import datetime
+import io
+from PIL import Image
 
 # Initialize blueprint
 returns_bp = Blueprint('returns', __name__)
@@ -87,6 +89,9 @@ def analyze_return_image(image_path, product_info, reason):
         with open(image_path, 'rb') as f:
             image_bytes = f.read()
         
+        # Convert raw bytes to a PIL Image
+        image_pil = Image.open(io.BytesIO(image_bytes))
+        
         # Initialize Gemini model
         model = genai.GenerativeModel('gemini-2.0-flash')
         
@@ -114,9 +119,11 @@ def analyze_return_image(image_path, product_info, reason):
         
         Only return the JSON object, no additional text.
         """
+        print(prompt)
         
-        # Generate content with Gemini
-        response = model.generate_content([prompt, image_bytes])
+        # Generate content with Gemini using the prompt and the PIL image
+        response = model.generate_content([prompt, image_pil])
+        print(response)
         
         # Parse the JSON response
         response_text = response.text

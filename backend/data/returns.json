@@ -1,1 +1,242 @@
-[]
+[
+  {
+    "id": "2b1886d3-b65e-46fe-8b96-6be20e9f6ecc",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "It is a shitty hoodie and it's too small",
+    "imagePath": "return_image_7a77b1c7-18dc-4a95-852f-8a7fbace0329.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T19:51:27.068368",
+    "status": "Pending"
+  },
+  {
+    "id": "bce6ca0c-6981-44cc-bbad-30a386b0860e",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "It is a shitty ass product",
+    "imagePath": "return_image_6225b263-99de-4e3a-bb90-1e23a55c760f.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T19:53:34.874276",
+    "status": "Pending"
+  },
+  {
+    "id": "272cde22-bc30-441f-8445-26cb2423f476",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "its shitty",
+    "imagePath": "return_image_8f74f9fc-918c-4dc3-9d19-7c81b9a3bae2.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T19:57:45.679933",
+    "status": "Pending"
+  },
+  {
+    "id": "35b3e718-8551-4c63-9484-a48c75fcca0c",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "its shitty",
+    "imagePath": "return_image_f7a7f3ae-96dc-4868-a65f-096dafa00f73.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T19:58:06.857485",
+    "status": "Pending"
+  },
+  {
+    "id": "713b3bc3-ce99-4a1c-94e9-435e0c8cc888",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "mm3mmq",
+    "imagePath": "return_image_2019e53b-60b7-4713-beb7-17fee1cafd5a.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T19:58:34.695323",
+    "status": "Pending"
+  },
+  {
+    "id": "bfd362a1-c7c7-4d41-8894-808401ebf7fe",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "aaa",
+    "imagePath": "return_image_46544e14-6d82-4d7f-babe-a3e04eaef99f.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T19:59:17.389329",
+    "status": "Pending"
+  },
+  {
+    "id": "4cde7df4-9c75-4035-90a3-5541346edb2e",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "stupid",
+    "imagePath": "return_image_cd743e5c-d25f-4a2f-9a39-ecc5330fc3f3.jpg",
+    "analysis": {
+      "productIdentified": false,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": false
+    },
+    "timestamp": "2025-03-08T20:02:47.038472",
+    "status": "Rejected"
+  },
+  {
+    "id": "ed76345a-75bc-4399-9b22-4a297101d0f0",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "It doesn't fit me",
+    "imagePath": "return_image_d0733379-10ec-4741-9171-27a0a0ece8e8.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T20:04:15.204953",
+    "status": "Pending"
+  },
+  {
+    "id": "870f24e1-7820-45b8-b5ea-82b9d7861818",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "its shitty",
+    "imagePath": "return_image_e0c0e5b5-7f28-48e5-84a7-1ac9332698a4.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": false
+    },
+    "timestamp": "2025-03-08T20:04:47.258241",
+    "status": "Rejected"
+  },
+  {
+    "id": "1b3aca7f-c9c0-48d2-adbd-e921ff4f70e6",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "It is too small",
+    "imagePath": "return_image_aa99c842-1e09-4432-8a84-d04a7b961daf.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T20:05:23.513432",
+    "status": "Pending"
+  },
+  {
+    "id": "b55c078b-60c5-43c9-bbd9-0543b2c7165f",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "It is too small",
+    "imagePath": "return_image_614a923f-6d01-4575-94f3-21451dbc5710.jpg",
+    "analysis": {
+      "productIdentified": false,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": false
+    },
+    "timestamp": "2025-03-08T20:05:42.450630",
+    "status": "Rejected"
+  },
+  {
+    "id": "1d7fbe4e-1f07-4da9-9a5c-5a7e48294c41",
+    "orderId": 1741481371368,
+    "productInfo": {
+      "name": "Rotman Hoodie",
+      "category": "hoodies",
+      "size": "S",
+      "color": "black"
+    },
+    "reason": "Its too small",
+    "imagePath": "return_image_a057b98d-3796-4e4d-b96b-d34faed3ce50.jpg",
+    "analysis": {
+      "productIdentified": true,
+      "defectsFound": false,
+      "defectType": "None found",
+      "returnEligible": true
+    },
+    "timestamp": "2025-03-08T20:07:31.231056",
+    "status": "Processing"
+  }
+]
