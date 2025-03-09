@@ -107,7 +107,7 @@ def analyze_return_image(image_path, product_info, reason):
         1. Is the product identifiable in the image? (Yes/No)
         2. Are there any visible defects? (Yes/No)
         3. What type of defect is visible, if any?
-        4. Should this return be approved based on the image? (Yes/No)
+        4. Should this return be approved based on the image (Does the color of the product match the image)? (Yes/No)
         
         Format your response as a JSON object with the following fields:
         {{
