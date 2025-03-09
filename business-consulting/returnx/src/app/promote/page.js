@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from 'next/navigation';
 import ActionCard from "@/components/ActionCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/components/Header";
 import { GoogleLoader, GeminiLoader } from "@/components/LoadingIndicator";
 
-export default function PromotePage() {
+// Create a client component that uses search params
+function PromotePageContent() {
   const [data, setData] = useState(null);
   const [returnData, setReturnData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -252,5 +253,23 @@ export default function PromotePage() {
         </motion.div>
       </div>
     </>
+  );
+}
+
+// Loading fallback for Suspense
+function LoadingFallback() {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <GoogleLoader />
+    </div>
+  );
+}
+
+// Main page component with Suspense boundary
+export default function PromotePage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <PromotePageContent />
+    </Suspense>
   );
 }
