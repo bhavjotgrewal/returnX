@@ -30,12 +30,12 @@ def add_cors_headers(response):
     return response
 
 # Register blueprints - without the /api prefix since Vercel handles that
-app.register_blueprint(settings_bp, url_prefix='/settings')
-app.register_blueprint(performance_bp, url_prefix='/performance')
-app.register_blueprint(promote_bp, url_prefix='/promote')
-app.register_blueprint(returns_bp, url_prefix='/returns')
-app.register_blueprint(products_bp, url_prefix='/products')
-app.register_blueprint(returns_analysis_bp, url_prefix='/returns_analysis')
+app.register_blueprint(settings_bp, url_prefix='/api/settings')
+app.register_blueprint(performance_bp, url_prefix='/api/performance')
+app.register_blueprint(promote_bp, url_prefix='/api/promote')
+app.register_blueprint(returns_bp, url_prefix='/api/returns')
+app.register_blueprint(products_bp, url_prefix='/api/products')
+app.register_blueprint(returns_analysis_bp, url_prefix='/api/returns_analysis')
 
 # Root route
 @app.route("/")
