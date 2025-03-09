@@ -1,44 +1,72 @@
-# This file is specifically for Vercel serverless deployment
-# It imports the Flask app from app.py and exposes it for Vercel
-
-import sys
+# Import Flask to create an app instance directly in this file
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 import os
-from flask import Flask, request
+import sys
 
-# Add parent directory to path to allow imports
+# Add parent directory to path to allow imports from app
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# Import the app from the main app.py file
-from app import app as flask_app
+# Import blueprints
+try:
+    from api.settings import settings_bp
+    from api.performance import performance_bp
+    from api.promote import promote_bp
+    from api.returns import returns_bp
+    from api.products import products_bp
+    from api.returns_analysis import returns_analysis_bp
+except ImportError:
+    # Fallback - during deployment the module structure might be different
+    from settings import settings_bp
+    from performance import performance_bp
+    from promote import promote_bp
+    from returns import returns_bp
+    from products import products_bp
+    from returns_analysis import returns_analysis_bp
 
-# Create a new Flask app specifically for Vercel that wraps the original app
+# Create a Flask app directly in this file
 app = Flask(__name__)
 
-# Middleware to normalize URLs with double slashes
-@app.before_request
-def normalize_url():
-    path = request.path
-    # Check if there are consecutive slashes (except for the scheme://)
-    if '//' in path and not path.startswith('//'):
-        # Normalize multiple slashes to a single slash
-        while '//' in path:
-            path = path.replace('//', '/')
-        # Redirect to the normalized URL
-        return flask_app.redirect(path)
+# Enable CORS
+CORS(app, resources={r"/*": {"origins": "*"}})
 
-# Catch-all route that forwards to the main Flask app
-@app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
-@app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'])
-def catch_all(path):
-    # Add CORS headers to all responses
-    if request.method == 'OPTIONS':
-        headers = {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            'Access-Control-Allow-Credentials': 'true'
-        }
-        return '', 204, headers
-    
-    # Forward the request to the main app
-    return flask_app.dispatch_request()
+# Add CORS headers to all responses
+@app.after_request
+def add_cors_headers(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
+
+# Handle OPTIONS requests explicitly
+@app.route('/', defaults={'path': ''}, methods=['OPTIONS'])
+@app.route('/<path:path>', methods=['OPTIONS'])
+def options_handler(path):
+    response = jsonify({'status': 'ok'})
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    return response
+
+# Register blueprints
+app.register_blueprint(settings_bp, url_prefix='/settings')
+app.register_blueprint(performance_bp, url_prefix='/performance')
+app.register_blueprint(promote_bp, url_prefix='/promote')
+app.register_blueprint(returns_bp, url_prefix='/returns')
+app.register_blueprint(products_bp, url_prefix='/products')
+app.register_blueprint(returns_analysis_bp, url_prefix='/returns_analysis')
+
+# Root route
+@app.route("/")
+def home():
+    return jsonify({"message": "Hello from Returns-X API!"})
+
+# Health check route
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"})
+
+# Create data directories in Vercel environment
+if os.environ.get('VERCEL'):
+    os.makedirs('/tmp', exist_ok=True)
+    os.makedirs('/tmp/return_images', exist_ok=True)
