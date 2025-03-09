@@ -101,6 +101,7 @@ def analyze_return_image(image_path, product_info, reason):
         
         Product: {product_info['name']}
         Category: {product_info['category']}
+        Color: {product_info['color']}
         Customer return reason: "{reason}"
         
         Please determine:
