@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from 'next/navigation';
 import ActionCard from "@/components/ActionCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { Header } from "@/components/Header";
@@ -8,10 +9,16 @@ import { GoogleLoader, GeminiLoader } from "@/components/LoadingIndicator";
 
 export default function PromotePage() {
   const [data, setData] = useState(null);
+  const [returnData, setReturnData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [visibleCards, setVisibleCards] = useState(0);
   const [retryCount, setRetryCount] = useState(0);
+  
+  // Get query parameters
+  const searchParams = useSearchParams();
+  const returnId = searchParams.get('returnId');
+  const productId = searchParams.get('productId');
   
   useEffect(() => {
     async function fetchData() {
@@ -19,17 +26,60 @@ export default function PromotePage() {
         // Add a short delay before the fetch to give the server time to initialize
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        const res = await fetch("/api/dashboardData");
+        // First, if we have a returnId, fetch the return data to get the image
+        let returnImagePath = null;
+        if (returnId) {
+          try {
+            const returnResponse = await fetch(`/api/returns`);
+            if (returnResponse.ok) {
+              const allReturns = await returnResponse.json();
+              const thisReturn = allReturns.find(r => r.id === returnId);
+              if (thisReturn) {
+                setReturnData(thisReturn);
+                returnImagePath = thisReturn.imagePath;
+              }
+            }
+          } catch (returnError) {
+            console.error("Error fetching return data:", returnError);
+          }
+        }
+        
+        // Next, fetch the suggestions data
+        let url = "/api/returns_analysis/dashboardData";
+        const params = new URLSearchParams();
+        
+        if (productId) {
+          params.append('productId', productId);
+        }
+        
+        if (returnId) {
+          params.append('returnId', returnId);
+        }
+        
+        if (params.toString()) {
+          url += `?${params.toString()}`;
+        }
+        
+        const res = await fetch(url);
         if (!res.ok) {
           throw new Error('Failed to fetch data');
         }
         const result = await res.json();
-        setData(result);
+        
+        // Use the return image for all suggestions if available
+        const transformedData = {
+          ...result,
+          suggestedActions: result.suggestedActions.map((action) => ({
+            ...action,
+          }))
+        };
+        
+        setData(transformedData);
         setError(null);
         
         // Start the card animation after a brief delay
         setTimeout(() => {
-          startCardAnimation(result.suggestedActions);
+          startCardAnimation(transformedData.suggestedActions);
         }, 500);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -58,7 +108,7 @@ export default function PromotePage() {
     return () => {
       setVisibleCards(0);
     };
-  }, [isLoading, retryCount]);
+  }, [isLoading, retryCount, productId, returnId]);
   
   // Handle card animation
   const startCardAnimation = (actions) => {
@@ -122,7 +172,35 @@ export default function PromotePage() {
           className="space-y-6 w-full max-w-7xl p-6 mt-16 mb-24 text-left"
           style={{ width: '100%', minHeight: '80vh' }}
         >
-          <h1 className="text-3xl font-semibold text-google-blue">Suggested Actions</h1>
+          {returnData && (
+            <div className="bg-blue-50 p-4 rounded-lg mb-6">
+              <h2 className="text-lg font-medium text-blue-800 mb-2">
+                Suggestions Based on Return Analysis
+              </h2>
+              <div className="flex items-start">
+                <div className="flex-1">
+                  <p className="text-sm font-medium">Return Reason:</p>
+                  <p className="text-sm text-gray-700 mb-2">{returnData.reason}</p>
+                  {returnData.analysis && (
+                    <div className="mt-2">
+                      <p className="text-sm font-medium">AI Analysis:</p>
+                      <p className="text-sm text-gray-700">
+                        {returnData.analysis.defectsFound ? 
+                          `Defect found: ${returnData.analysis.defectType}` : 
+                          "No defects detected in the image"}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <h1 className="text-3xl font-semibold text-google-blue">
+            {data.productName 
+              ? `Suggested Actions for ${data.productName}` 
+              : 'Suggested Actions'}
+          </h1>
           
           <div className="grid grid-cols-1 gap-6">
             <AnimatePresence>
@@ -137,8 +215,8 @@ export default function PromotePage() {
                   <ActionCard 
                     number={action.id}
                     title={action.title}
-                    image={action.image}
                     description={action.description}
+                    improvedDescription={action.improvedDescription}
                     onActionApplied={handleActionApplied}
                   />
                 </motion.div>

@@ -17,7 +17,7 @@
       "returnEligible": true
     },
     "timestamp": "2025-03-08T19:51:27.068368",
-    "status": "Pending"
+    "status": "Approved"
   },
   {
     "id": "bce6ca0c-6981-44cc-bbad-30a386b0860e",
@@ -37,7 +37,7 @@
       "returnEligible": true
     },
     "timestamp": "2025-03-08T19:53:34.874276",
-    "status": "Pending"
+    "status": "Approved"
   },
   {
     "id": "272cde22-bc30-441f-8445-26cb2423f476",
@@ -57,7 +57,7 @@
       "returnEligible": true
     },
     "timestamp": "2025-03-08T19:57:45.679933",
-    "status": "Pending"
+    "status": "Approved"
   },
   {
     "id": "35b3e718-8551-4c63-9484-a48c75fcca0c",
@@ -77,7 +77,7 @@
       "returnEligible": true
     },
     "timestamp": "2025-03-08T19:58:06.857485",
-    "status": "Pending"
+    "status": "Rejected"
   },
   {
     "id": "713b3bc3-ce99-4a1c-94e9-435e0c8cc888",

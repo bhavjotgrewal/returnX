@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import PreviewChanges from '@/components/PreviewChanges';
 import SuccessNotification from '@/components/SuccessNotification';
 
-export default function ActionCard({ number, title, description, image, onActionApplied }) {
+export default function ActionCard({ number, title, description, image, improvedDescription, onActionApplied }) {
   const [showPreview, setShowPreview] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -24,14 +23,13 @@ export default function ActionCard({ number, title, description, image, onAction
     
     try {
       // Call the API to apply changes
-      const response = await fetch('/api/applyChanges', {
+      const response = await fetch('/api/returns_analysis/applyAction', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           id: number,
-          title,
           description: editedText,
           timestamp: new Date().toISOString()
         }),
@@ -68,18 +66,8 @@ export default function ActionCard({ number, title, description, image, onAction
 
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden google-card">
-      <div className="flex flex-col md:flex-row flex-wrap">
-        <div className="md:w-1/3 relative h-64 md:h-auto">
-          <Image 
-            src={image || "/api/placeholder/400/320"} 
-            alt={title} 
-            fill
-            style={{ objectFit: 'cover' }}
-            className="border-r border-gray-100"
-          />
-        </div>
-        
-        <div className="p-6 md:w-2/3 flex flex-col">
+      <div className="flex flex-col">
+        <div className="p-6 flex flex-col">
           <div className="flex items-center mb-3">
             <div className="bg-google-blue bg-opacity-20 text-google-blue h-8 w-8 rounded-full flex items-center justify-center font-medium mr-3">
               {number}
@@ -169,7 +157,7 @@ export default function ActionCard({ number, title, description, image, onAction
               
               <PreviewChanges 
                 title={title}
-                description={description}
+                description={improvedDescription || description}
                 onAccept={handleAccept}
                 onReject={handleReject}
                 isSubmitting={isSubmitting}

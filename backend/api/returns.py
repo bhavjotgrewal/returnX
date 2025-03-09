@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, send_file
 import json
 import os
 import base64
@@ -265,6 +265,32 @@ def update_return_status(return_id):
         json.dump(returns, f, indent=2)
     
     return jsonify({"message": "Return status updated"})
+
+# Serve return images
+@returns_bp.route('/images/<filename>', methods=['GET'])
+def get_return_image(filename):
+    try:
+        # Get the appropriate directory
+        _, images_dir = ensure_data_dir()
+        file_path = f"{images_dir}/{filename}"
+        
+        # Check if file exists
+        if not os.path.exists(file_path):
+            return jsonify({"error": "Image not found"}), 404
+        
+        # Determine content type
+        content_type = 'image/jpeg'
+        if filename.endswith('.png'):
+            content_type = 'image/png'
+        elif filename.endswith('.gif'):
+            content_type = 'image/gif'
+        
+        # Return the file
+        return send_file(file_path, mimetype=content_type)
+    
+    except Exception as e:
+        print(f"Error serving image: {str(e)}")
+        return jsonify({"error": "Failed to serve image"}), 500
 
 # Initialize on import
 init_returns_data()

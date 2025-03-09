@@ -6,6 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../../../context/CartContext';
 import { jsPDF } from 'jspdf';
 
+// API base URL - change this when deploying
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5000';
+
 export default function Return() {
 const params = useParams();
 const router = useRouter();
@@ -16,6 +19,7 @@ const [uploadedImage, setUploadedImage] = useState(null);
 const [isAnalyzing, setIsAnalyzing] = useState(false);
 const [analysisResult, setAnalysisResult] = useState(null);
 const [returnApproved, setReturnApproved] = useState(false);
+const [returnId, setReturnId] = useState(null);
 const fileInputRef = useRef(null);
 
 // Find the order by ID
@@ -47,21 +51,61 @@ const handleImageUpload = (e) => {
   }
 };
 
-const analyzeImage = () => {
+const analyzeImage = async () => {
   setIsAnalyzing(true);
   
-  // Simulate AI analysis with a timeout
-  setTimeout(() => {
-    // For demo purposes, we'll always approve the return
-    setIsAnalyzing(false);
+  try {
+    // Get product info from the first item (for simplicity)
+    const productInfo = order.items[0] || {};
+    
+    // Prepare the data for the API
+    const analysisData = {
+      image: uploadedImage,
+      orderId: order.id,
+      productInfo: {
+        name: productInfo.name || 'Unknown Product',
+        category: productInfo.category || 'clothing',
+        size: productInfo.size || 'Unknown Size',
+        color: productInfo.selectedColor || 'Unknown Color'
+      },
+      reason: reason
+    };
+    
+    // Call the backend API to analyze the image with Gemini
+    const response = await fetch(`${API_URL}/api/returns/analyze`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(analysisData),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to analyze return image');
+    }
+    
+    const data = await response.json();
+    
+    // Update state with the analysis result
+    setAnalysisResult(data.result);
+    setReturnId(data.returnId);
+    setReturnApproved(data.result.returnEligible);
+    
+  } catch (error) {
+    console.error('Error analyzing image:', error);
+    
+    // Fallback for demo/hackathon purposes
     setAnalysisResult({
       productIdentified: true,
       defectsFound: true,
-      defectType: 'Fabric tear',
+      defectType: 'Error analyzing with AI, assuming fabric damage',
       returnEligible: true
     });
     setReturnApproved(true);
-  }, 3000);
+    
+  } finally {
+    setIsAnalyzing(false);
+  }
 };
 
 const printLabel = () => {
@@ -80,7 +124,7 @@ const printLabel = () => {
 };
 
 const downloadPDF = () => {
-  const returnId = `RT${Math.floor(Math.random() * 10000000).toString().padStart(7, '0')}`;
+  const returnLabelId = returnId || `RT${Math.floor(Math.random() * 10000000).toString().padStart(7, '0')}`;
   const doc = new jsPDF();
   
   // Add content to PDF
@@ -88,7 +132,7 @@ const downloadPDF = () => {
   doc.text('Return Label', 105, 20, { align: 'center' });
   
   doc.setFontSize(14);
-  doc.text(`Order #: ${Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}`, 20, 40);
+  doc.text(`Order #: ${order.id}`, 20, 40);
   doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 50);
   
   doc.setFontSize(12);
@@ -120,7 +164,7 @@ const downloadPDF = () => {
   doc.setFontSize(14);
   doc.text('SCAN BARCODE BELOW', 105, yPosition + 10, { align: 'center' });
   doc.text('[Barcode Placeholder]', 105, yPosition + 25, { align: 'center' });
-  doc.text(`Return ID: ${returnId}`, 105, yPosition + 38, { align: 'center' });
+  doc.text(`Return ID: ${returnLabelId}`, 105, yPosition + 38, { align: 'center' });
   
   yPosition += 50;
   
@@ -128,7 +172,7 @@ const downloadPDF = () => {
   doc.text('Please ensure all items are in their original condition. Include all tags, packaging, and accessories.', 20, yPosition);
   doc.text('Refunds will be processed within 7-10 business days after we receive your return.', 20, yPosition + 10);
   
-  doc.save(`return-label-${returnId}.pdf`);
+  doc.save(`return-label-${returnLabelId}.pdf`);
 };
 
 const handleNextStep = () => {
@@ -144,16 +188,17 @@ const handleNextStep = () => {
 const generateReturnLabel = () => {
   // Move to the next step to show the label
   setStep(3);
-};'use client';
+};
 
-const handleReturn = () => {
+const handleReturn = async () => {
   // Mark the order as returned but don't remove it
   const updatedOrders = orders.map(o => {
     if (o.id === Number(params.id)) {
       return {
         ...o,
         status: 'Returned',
-        returnDate: new Date().toISOString()
+        returnDate: new Date().toISOString(),
+        returnId: returnId
       };
     }
     return o;
@@ -161,6 +206,21 @@ const handleReturn = () => {
   
   // Update orders with the modified list
   setOrders(updatedOrders);
+  
+  // If we have a return ID, update its status (optional)
+  if (returnId) {
+    try {
+      await fetch(`${API_URL}/api/returns/${returnId}/status`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: 'Processing' }),
+      });
+    } catch (error) {
+      console.error('Error updating return status:', error);
+    }
+  }
   
   // Show confirmation and redirect
   alert('Return processed successfully!');
@@ -326,14 +386,14 @@ return (
                 whileTap={{ scale: 0.95 }}
                 onClick={analyzeImage}
               >
-                Analyze Image
+                Analyze Image with AI
               </motion.button>
             )}
             
             {isAnalyzing && (
               <div className="flex flex-col items-center">
                 <div className="w-12 h-12 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin mb-4"></div>
-                <p>Analyzing image with AI...</p>
+                <p>Analyzing image with Gemini AI...</p>
               </div>
             )}
             
@@ -343,34 +403,47 @@ return (
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-white p-6 rounded-lg shadow-lg max-w-md mx-auto mb-8"
               >
-                <h3 className="text-xl font-bold mb-4">Analysis Results</h3>
+                <h3 className="text-xl font-bold mb-4">AI Analysis Results</h3>
                 <div className="space-y-2 text-left mb-6">
                   <p>
                     <span className="font-medium">Product Identified: </span>
-                    <span className="text-green-500">✓ Yes</span>
+                    <span className={analysisResult.productIdentified ? "text-green-500" : "text-red-500"}>
+                      {analysisResult.productIdentified ? "✓ Yes" : "✗ No"}
+                    </span>
                   </p>
                   <p>
                     <span className="font-medium">Defects Found: </span>
-                    <span className="text-green-500">✓ Yes</span>
+                    <span className={analysisResult.defectsFound ? "text-green-500" : "text-red-500"}>
+                      {analysisResult.defectsFound ? "✓ Yes" : "✗ No"}
+                    </span>
                   </p>
                   <p>
                     <span className="font-medium">Defect Type: </span>
-                    <span>Fabric tear</span>
+                    <span>{analysisResult.defectType}</span>
                   </p>
                   <p>
                     <span className="font-medium">Return Eligible: </span>
-                    <span className="text-green-500">✓ Approved</span>
+                    <span className={analysisResult.returnEligible ? "text-green-500" : "text-red-500"}>
+                      {analysisResult.returnEligible ? "✓ Approved" : "✗ Not Approved"}
+                    </span>
                   </p>
                 </div>
                 
-                <motion.button
-                  className="bg-blue-400 text-white px-12 py-3 rounded-full"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={generateReturnLabel}
-                >
-                  Generate Return Label
-                </motion.button>
+                {analysisResult.returnEligible ? (
+                  <motion.button
+                    className="bg-blue-400 text-white px-12 py-3 rounded-full"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={generateReturnLabel}
+                  >
+                    Generate Return Label
+                  </motion.button>
+                ) : (
+                  <p className="text-red-500 font-medium">
+                    We're sorry, but based on our AI analysis, this return cannot be processed.
+                    Please contact customer support for assistance.
+                  </p>
+                )}
               </motion.div>
             )}
             
@@ -404,7 +477,7 @@ return (
                 <div className="flex justify-between mb-4">
                   <div>
                     <p className="font-bold text-xl">Return Label</p>
-                    <p>Order #{Math.floor(Math.random() * 1000000).toString().padStart(6, '0')}</p>
+                    <p>Order #{order.id}</p>
                   </div>
                   <div className="text-right">
                     <p>Generated: {new Date().toLocaleDateString()}</p>
@@ -441,7 +514,7 @@ return (
                   <div className="my-4 h-24 bg-gray-300 flex items-center justify-center">
                     [Barcode Placeholder]
                   </div>
-                  <p>Return ID: RT{Math.floor(Math.random() * 10000000).toString().padStart(7, '0')}</p>
+                  <p>Return ID: {returnId || `RT${Math.floor(Math.random() * 10000000).toString().padStart(7, '0')}`}</p>
                 </div>
                 
                 <div className="text-sm">

@@ -9,40 +9,52 @@ import ProductCard from '../components/ProductCard';
 // Sample product data
 const productsData = [
   {
-    id: 1,
-    name: 'Sigma',
-    price: 100.99,
-    currency: 'CAD',
-    image: '/images/products/sigma-1.jpg',
-    category: 'hoodies'
+    "id": 1,
+    "name": "Sigma Hoodie",
+    "price": 100.99,
+    "currency": "CAD",
+    "image": "/images/products/hoodie-1.jpg",
+    "category": "hoodies",
+    "colors": ["burgundy", "black", "cream"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "description": "The Sigma hoodie features a unique abstract design, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.",
+    "composition": "95% organic certified cotton, 5% elastane"
   },
   {
-    id: 2,
-    name: 'Sigma',
-    price: 100.99,
-    currency: 'CAD',
-    image: '/images/products/sigma-1.jpg',
-    category: 'hoodies'
+    "id": 2,
+    "name": "Dorian Trousers",
+    "price": 100.99,
+    "currency": "CAD",
+    "image": "/images/products/trousers-3.jpg",
+    "category": "trousers",
+    "colors": ["burgundy", "black", "olive"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "description": "The Dorian Trousers are our best-selling jogger-style trouser, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.\n\nThis style is a wardrobe essential and reliable daywear piece that you'll find yourself reaching for on a daily basis.",
+    "composition": "95% organic certified cotton, 5% elastane"
   },
   {
-    id: 3,
-    name: 'Sasha Trousers',
-    price: 100.99,
-    currency: 'CAD',
-    image: '/images/products/sigma-1.jpg',
-    category: 'trousers',
-    description: 'The Sasha Trousers are our best-selling jogger-style trouser, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.',
-    composition: '95% organic certified cotton, 5% elastane'
+    "id": 3,
+    "name": "Cloud Tee",
+    "price": 75.99,
+    "currency": "CAD",
+    "image": "/images/products/t-shirt-1.jpg",
+    "category": "t-shirts",
+    "colors": ["white", "black", "gray"],
+    "sizes": ["XS", "S", "M", "L", "XL"],
+    "description": "Our signature Cloud Tee features a minimal design with exceptional comfort. Made from 100% organic cotton, it's the perfect addition to any wardrobe.",
+    "composition": "100% organic certified cotton"
   },
   {
-    id: 4,
-    name: 'Sasha Trousers',
-    price: 100.99,
-    currency: 'CAD',
-    image: '/images/products/sigma-1.jpg',
-    category: 'trousers',
-    description: 'The Sasha Trousers are our best-selling jogger-style trouser, made from a luxuriously soft and comfortable organic cotton with a weighty, high quality feel.',
-    composition: '95% organic certified cotton, 5% elastane'
+    "id": 4,
+    "name": "Drift Jacket",
+    "price": 199.99,
+    "currency": "CAD",
+    "image": "/images/products/jacket-1.jpg",
+    "category": "jackets",
+    "colors": ["navy", "olive", "black"],
+    "sizes": ["S", "M", "L", "XL"],
+    "description": "The Drift Jacket is your perfect companion for unpredictable weather. Water-resistant, breathable, and stylish, it's as functional as it is fashionable.",
+    "composition": "85% recycled polyester, 15% elastane"
   }
 ];
 

@@ -37,7 +37,7 @@ export function Header() {
               className="relative flex items-center justify-center h-9 w-9 rounded-full bg-google-blue text-white overflow-hidden"
             >
               <img 
-                src="/api/placeholder/36/36" 
+                src="/star.gif" 
                 alt="Profile" 
                 className="h-full w-full object-cover"
                 onError={(e) => {
